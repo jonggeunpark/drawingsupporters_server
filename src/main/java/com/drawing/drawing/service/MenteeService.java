@@ -78,3 +78,22 @@ public class MenteeService {
         return httpHeaders;
     }
 
+
+    // 이메일 중복 확인
+    public DuplicateResponseDto checkEmail(EmailDto emailDto) {
+
+        return DuplicateResponseDto.of(menteeRepository.findOneWithAuthoritiesByEmail(emailDto.getEmail()).orElse(null) != null);
+    }
+
+    // 닉네임 중복 확인
+    public DuplicateResponseDto checkNickname(NicknameDto nicknameDto) {
+
+        return DuplicateResponseDto.of(menteeRepository.findOneByNickname(nicknameDto.getNickname()).orElse(null) != null);
+    }
+
+    // 유저 정보 확인
+    public String getNickname(String email) {
+        return findOneByEmail(email).getNickname();
+    }
+
+}
