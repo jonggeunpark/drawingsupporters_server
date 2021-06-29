@@ -49,3 +49,32 @@ public class MenteeService {
         return menteeRepository.save(signupRequestDto.toEntity());
     }
 
+
+    // 로그인
+    @Transactional
+    public HttpHeaders login(LoginRequestDto loginRequestDto) {
+
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(loginRequestDto.getEmail(), loginRequestDto.getPassword());
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        try {
+            Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            String acccessToken = tokenProvider.createJwtAccessToken(authentication);
+            String refreshToken = tokenProvider.createJwtRefreshToken();
+
+            httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer access token" + acccessToken);
+            httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer refresh token" + refreshToken);
+
+        } catch (DisabledException | LockedException | BadCredentialsException e) {
+            if (e.getClass().equals(BadCredentialsException.class)) {
+                throw new InvalidPasswordException(loginRequestDto.getPassword());
+            }
+        }
+
+        return httpHeaders;
+    }
+
