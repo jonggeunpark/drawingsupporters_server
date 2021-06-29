@@ -11,7 +11,7 @@ public class Board {
     @Column(name = "board_id")
     private Long id;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private Set<Post> postSet = new HashSet<>();
 
     private String name;

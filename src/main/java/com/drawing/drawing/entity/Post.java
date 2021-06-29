@@ -1,5 +1,7 @@
 package com.drawing.drawing.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -19,13 +21,15 @@ public class Post {
     @JoinColumn(name = "board_id")
     private Board board;
 
-    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private Set<Comment> commentSet;
 
     private String title;
     private String content;
     private int viewCount;
     private int likeCount;
+
+    @JsonFormat(pattern = "yyyy/MM/dd", timezone = "Asia/Seoul")
     private LocalDateTime createdDate;
 
 }
