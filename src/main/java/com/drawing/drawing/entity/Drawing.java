@@ -25,10 +25,10 @@ public class Drawing {
     private Feedback feedback;
 
     private String title;
-    private String imageSrc;
     private String description;
     private String feedbackType;
-    private String file;
+    private String uuid;
+    private String filename;
     private int priceUpperLimit;
     private int priceLowerLimit;
     private String phoneNumber;
@@ -41,20 +41,19 @@ public class Drawing {
 
     //== 빌더 ==//
     @Builder
-    public Drawing(Mentee mentee, String title, String imageSrc, String description,
-                   String feedbackType, int priceUpperLimit, int priceLowerLimit, String phoneNumber,
-                   LocalDateTime registDate, String file, LocalDateTime endDate) {
+    public Drawing(Mentee mentee, String title, String description, String feedbackType, int priceUpperLimit,
+                   int priceLowerLimit, String phoneNumber, LocalDateTime registDate, String uuid, String filename, LocalDateTime endDate) {
 
         this.mentee = mentee;
         mentee.getDrawingSet().add(this);
 
         this.title = title;
-        this.file = file;
-        this.imageSrc = imageSrc;
         this.description = description;
         this.feedbackType = feedbackType;
         this.priceLowerLimit = priceLowerLimit;
         this.priceUpperLimit = priceUpperLimit;
+        this.uuid = uuid;
+        this.filename = filename;
         this.phoneNumber = phoneNumber;
         this.registDate = registDate;
         this.endDate = endDate;

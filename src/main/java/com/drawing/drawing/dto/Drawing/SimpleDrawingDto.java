@@ -5,6 +5,7 @@ import com.drawing.drawing.entity.Drawing;
 import com.drawing.drawing.entity.Feedback;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
 
 @AllArgsConstructor
 @Getter
@@ -14,7 +15,8 @@ public class SimpleDrawingDto {
     private String title;
     private String thumbnail;
 
-    public static SimpleDrawingDto of(Drawing drawing) {
-        return new SimpleDrawingDto(drawing.getId(), drawing.getTitle(), drawing.getImageSrc());
+    public static SimpleDrawingDto of(Drawing drawing, String storage) {
+
+        return new SimpleDrawingDto(drawing.getId(), drawing.getTitle(), storage + "/" + drawing.getUuid() + "/" + drawing.getFilename());
     }
 }
