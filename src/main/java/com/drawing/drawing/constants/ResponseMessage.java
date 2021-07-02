@@ -14,7 +14,8 @@ public class ResponseMessage {
     public static final String CREATE_DRAWING = "피드백 요청 생성 성공";
 
 
-    public static final String DUPLICATE_MENTEE = "이미 등록되어있는 이메일입니다.";
+    public static final String DUPLICATE_EMAIL = "이미 등록되어있는 이메일입니다.";
+    public static final String DUPLICATE_NICKNAME = "이미 등록되어있는 닉네임입니다.";
     public static final String INVALID_PASSWORD = "비밀번호가 유효하지 않습니다.";
     public static final String NOT_FOUND = "Not Found";
 

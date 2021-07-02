@@ -2,8 +2,9 @@ package com.drawing.drawing.service;
 
 import com.drawing.drawing.dto.Mentee.*;
 import com.drawing.drawing.entity.Mentee;
+import com.drawing.drawing.exception.EmailDuplicateException;
 import com.drawing.drawing.exception.InvalidPasswordException;
-import com.drawing.drawing.exception.MenteeDuplicateException;
+import com.drawing.drawing.exception.NicknameDuplicateException;
 import com.drawing.drawing.exception.NotFoundException;
 import com.drawing.drawing.jwt.JwtFilter;
 import com.drawing.drawing.jwt.TokenProvider;
@@ -42,12 +43,12 @@ public class MenteeService {
 
         // 이메일 중복 가입
         if (menteeRepository.findOneWithAuthoritiesByEmail(signupRequestDto.getEmail()).orElse(null) != null) {
-            throw new MenteeDuplicateException(signupRequestDto.getEmail());
+            throw new EmailDuplicateException(signupRequestDto.getEmail());
         }
 
         // 닉네임 중복
         if (menteeRepository.findOneByNickname(signupRequestDto.getNickname()).orElse(null) != null) {
-            throw new MenteeDuplicateException(signupRequestDto.getNickname());
+            throw new NicknameDuplicateException(signupRequestDto.getNickname());
         }
 
         signupRequestDto.setPassword(passwordEncoder.encode(signupRequestDto.getPassword()));

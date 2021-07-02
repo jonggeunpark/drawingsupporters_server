@@ -17,9 +17,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(message,HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(MenteeDuplicateException.class)
-    public ResponseEntity<Message> MenteeDuplicateException(MenteeDuplicateException e) {
-        Message message = new Message(StatusCode.BAD_REQUEST, ResponseMessage.DUPLICATE_MENTEE);
+    @ExceptionHandler(EmailDuplicateException.class)
+    public ResponseEntity<Message> MenteeDuplicateException(EmailDuplicateException e) {
+        Message message = new Message(StatusCode.BAD_REQUEST, ResponseMessage.DUPLICATE_EMAIL);
+        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(NicknameDuplicateException.class)
+    public ResponseEntity<Message> NicknameDuplicateException(NicknameDuplicateException e) {
+        Message message = new Message(StatusCode.BAD_REQUEST, ResponseMessage.DUPLICATE_NICKNAME);
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
 
