@@ -40,9 +40,14 @@ public class MenteeService {
     @Transactional
     public Mentee signup(SignupRequestDto signupRequestDto) {
 
-        // 이미 가입
+        // 이메일 중복 가입
         if (menteeRepository.findOneWithAuthoritiesByEmail(signupRequestDto.getEmail()).orElse(null) != null) {
             throw new MenteeDuplicateException(signupRequestDto.getEmail());
+        }
+
+        // 닉네임 중복
+        if (menteeRepository.findOneByNickname(signupRequestDto.getNickname()).orElse(null) != null) {
+            throw new MenteeDuplicateException(signupRequestDto.getNickname());
         }
 
         signupRequestDto.setPassword(passwordEncoder.encode(signupRequestDto.getPassword()));
