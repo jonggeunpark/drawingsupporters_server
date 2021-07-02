@@ -40,7 +40,7 @@ public class FeedbackService {
 
         Mentee mentee = menteeService.findOneByEmail(email);
 
-        Feedback feedback = feedbackRepository.findById(id).orElseThrow(() -> new NotFoundException("해당 id를 가진 피드백 요청 없음"));
+        Feedback feedback = feedbackRepository.findById(id).orElseThrow(() -> new NotFoundException("해당 id를 가진 피드백 없음"));
 
         if(feedback.getDrawing().getMentee() != mentee) {
             throw new NotFoundException("id가 유효하지 않음");
