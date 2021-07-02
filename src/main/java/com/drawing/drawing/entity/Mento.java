@@ -1,7 +1,9 @@
 package com.drawing.drawing.entity;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
@@ -11,6 +13,7 @@ import java.util.Set;
 @Entity
 @Getter
 @SuperBuilder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("o")
 public class Mento extends User{
 
