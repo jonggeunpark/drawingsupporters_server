@@ -80,7 +80,7 @@ public class MenteeController {
     }
 
     // 멘티_이메일_중복_확인
-    @GetMapping("/check-email")
+    @PostMapping("/check-email")
     public ResponseEntity<Message> checkEmail(@Valid @RequestBody EmailDto emailDto) {
 
         DuplicateResponseDto response = menteeService.checkEmail(emailDto);
@@ -90,7 +90,7 @@ public class MenteeController {
     }
 
     // 멘티_닉네임_중복_확인
-    @GetMapping("/check-nickname")
+    @PostMapping("/check-nickname")
     public ResponseEntity<Message> checkNickname(@Valid @RequestBody NicknameDto nicknameDto) {
 
         DuplicateResponseDto response = menteeService.checkNickname(nicknameDto);
