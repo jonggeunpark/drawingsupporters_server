@@ -20,8 +20,7 @@ public class Drawing {
     @JoinColumn(name = "user_id")
     private Mentee mentee;
 
-    @OneToOne
-    @JoinColumn(name = "feedback_id")
+    @OneToOne(mappedBy = "drawing")
     private Feedback feedback;
 
     private String title;

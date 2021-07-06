@@ -16,7 +16,8 @@ public class Feedback {
     @Column(name = "feedback_id")
     private Long id;
 
-    @OneToOne(mappedBy = "feedback")
+    @OneToOne
+    @JoinColumn(name = "drawing_id")
     private Drawing drawing;
 
     @ManyToOne(fetch = FetchType.LAZY)
