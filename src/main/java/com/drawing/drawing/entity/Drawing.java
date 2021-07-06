@@ -32,6 +32,7 @@ public class Drawing {
     private int priceUpperLimit;
     private int priceLowerLimit;
     private String phoneNumber;
+    private DrawingStatus status;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime registDate;
@@ -42,12 +43,14 @@ public class Drawing {
     //== 빌더 ==//
     @Builder
     public Drawing(Mentee mentee, String title, String description, String feedbackType, int priceUpperLimit,
-                   int priceLowerLimit, String phoneNumber, LocalDateTime registDate, String uuid, String filename, LocalDateTime endDate) {
+                   int priceLowerLimit, String phoneNumber, LocalDateTime registDate, String uuid, String filename,
+                   LocalDateTime endDate, DrawingStatus status) {
 
         this.mentee = mentee;
         mentee.getDrawingSet().add(this);
 
         this.title = title;
+        this.status = status;
         this.description = description;
         this.feedbackType = feedbackType;
         this.priceLowerLimit = priceLowerLimit;

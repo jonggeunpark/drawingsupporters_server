@@ -1,5 +1,5 @@
 package com.drawing.drawing.entity;
 
-public enum FeedbackStatus {
+public enum DrawingStatus {
     REQUESTED, ACCEPTED, COMPLETED
 }

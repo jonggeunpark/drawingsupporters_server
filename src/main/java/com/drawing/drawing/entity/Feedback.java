@@ -24,31 +24,29 @@ public class Feedback {
     private Mento mento;
 
     private String title;
-    private FeedbackStatus status;
     private String description;
     private int price;
-    private String thumbnail;
-    private String feedbackType;
-    private String file;
+    private String feedbackFileType;
+    private String uuid;
+    private String filename;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime registDate;
 
     //== 빌더 ==//
     @Builder
-    public Feedback (Drawing drawing, Mento mento, String title, FeedbackStatus status, String description, int price, String thumbnail, String feedbackType, String file, LocalDateTime registDate) {
+    public Feedback (Drawing drawing, Mento mento, String title, String description, int price, String feedbackFileType, String uuid, String filename, LocalDateTime registDate) {
         this.drawing = drawing;
 
         this.mento = mento;
         mento.getFeedbackSet().add(this);
 
         this.title = title;
-        this.status = status;
         this.description = description;
         this.price = price;
-        this.thumbnail = thumbnail;
-        this.feedbackType = feedbackType;
-        this.file = file;
+        this.feedbackFileType = feedbackFileType;
+        this.uuid = uuid;
+        this.filename = filename;
         this.registDate = registDate;
     }
 }
