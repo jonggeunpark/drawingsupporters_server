@@ -2,10 +2,7 @@ package com.drawing.drawing.dto.Drawing;
 
 
 import com.drawing.drawing.dto.Feedback.PaymentDto;
-import com.drawing.drawing.entity.Authority;
-import com.drawing.drawing.entity.Drawing;
-import com.drawing.drawing.entity.Mentee;
-import com.drawing.drawing.entity.Mento;
+import com.drawing.drawing.entity.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,10 +22,7 @@ public class DrawingRequestDto {
     private String description;
     private int start;
     private int end;
-    private PaymentDto payment;
     private List<String> feedback_type;
-    private String feedback_file_type;
-    private MultipartFile file;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private String end_time;
@@ -43,7 +37,7 @@ public class DrawingRequestDto {
                 .mentee(mentee)
                 .title(title)
                 .description(description)
-                .feedbackType(String.join(",", feedback_file_type))
+                .feedbackType(String.join(",", feedback_type))
                 .endDate(dateTime)
                 .priceLowerLimit(start)
                 .priceUpperLimit(end)
@@ -51,6 +45,7 @@ public class DrawingRequestDto {
                 .filename(filename)
                 .phoneNumber(phone_number)
                 .registDate(LocalDateTime.now())
+                .status(DrawingStatus.REQUESTED)
                 .build();
     }
 }
