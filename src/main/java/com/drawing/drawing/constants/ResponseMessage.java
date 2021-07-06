@@ -2,7 +2,7 @@ package com.drawing.drawing.constants;
 
 public class ResponseMessage {
 
-    public static final String CREATE_MENTEE = "회원가입 성공";
+    public static final String SIGNUP_SUCCESS = "회원가입 성공";
     public static final String LOGIN_SUCCESS = "로그인 성공";
     public static final String EMAIL_CHECK_SUCCESS = "이메일 중복 확인 성공";
     public static final String NICKNAME_CHECK_SUCCESS = "닉네임 중복 확인 성공";
