@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class DetailFeedbackDto {
     private String feedback_file_type;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDateTime end_time;
+    private LocalDate end_time;
 
     public static DetailFeedbackDto of(Feedback feedback) {
         Drawing drawing = feedback.getDrawing();

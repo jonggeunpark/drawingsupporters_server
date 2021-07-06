@@ -5,7 +5,7 @@ import com.drawing.drawing.entity.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -17,15 +17,13 @@ public class DrawingRequestDto {
     private int price_lower_limit;
     private int price_upper_limit;
     private List<String> feedback_type;
-
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private String end_time;
     private String phone_number;
 
 
     public Drawing toEntity(Mentee mentee, String uuid, String filename) {
 
-        LocalDateTime dateTime = LocalDateTime.parse(end_time, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate dateTime = LocalDate.parse(end_time, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
         return Drawing.builder()
                 .mentee(mentee)
@@ -38,7 +36,7 @@ public class DrawingRequestDto {
                 .uuid(uuid)
                 .filename(filename)
                 .phoneNumber(phone_number)
-                .registDate(LocalDateTime.now())
+                .registDate(LocalDate.now())
                 .status(DrawingStatus.REQUESTED)
                 .build();
     }

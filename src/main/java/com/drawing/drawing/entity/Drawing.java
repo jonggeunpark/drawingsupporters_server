@@ -5,7 +5,7 @@ import lombok.*;
 import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -34,16 +34,16 @@ public class Drawing {
     private DrawingStatus status;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDateTime registDate;
+    private LocalDate registDate;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     //== 빌더 ==//
     @Builder
     public Drawing(Mentee mentee, String title, String description, String feedbackType, int priceUpperLimit,
-                   int priceLowerLimit, String phoneNumber, LocalDateTime registDate, String uuid, String filename,
-                   LocalDateTime endDate, DrawingStatus status) {
+                   int priceLowerLimit, String phoneNumber, LocalDate registDate, String uuid, String filename,
+                   LocalDate endDate, DrawingStatus status) {
 
         this.mentee = mentee;
         mentee.getDrawingSet().add(this);

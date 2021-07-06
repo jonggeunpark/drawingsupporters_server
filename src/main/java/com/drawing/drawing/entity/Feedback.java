@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -32,11 +32,11 @@ public class Feedback {
     private String filename;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDateTime registDate;
+    private LocalDate registDate;
 
     //== 빌더 ==//
     @Builder
-    public Feedback (Drawing drawing, Mento mento, String title, String description, int price, String feedbackFileType, String uuid, String filename, LocalDateTime registDate) {
+    public Feedback (Drawing drawing, Mento mento, String title, String description, int price, String feedbackFileType, String uuid, String filename, LocalDate registDate) {
         this.drawing = drawing;
 
         this.mento = mento;

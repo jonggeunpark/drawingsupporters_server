@@ -5,7 +5,8 @@ import com.drawing.drawing.entity.Feedback;
 import com.drawing.drawing.entity.Mento;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 
 @Getter
 public class FeedbackReqeustDto {
@@ -26,7 +27,7 @@ public class FeedbackReqeustDto {
                 .feedbackFileType(feedback_file_type)
                 .uuid(uuid)
                 .filename(filename)
-                .registDate(LocalDateTime.now())
+                .registDate(LocalDate.now())
                 .build();
     }
 

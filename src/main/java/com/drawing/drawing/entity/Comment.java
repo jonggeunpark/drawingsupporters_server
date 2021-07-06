@@ -3,7 +3,7 @@ package com.drawing.drawing.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 public class Comment {
@@ -24,5 +24,5 @@ public class Comment {
     private int likeCount;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDateTime createdDate;
+    private LocalDate createdDate;
 }
