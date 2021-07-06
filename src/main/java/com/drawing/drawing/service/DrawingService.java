@@ -32,6 +32,10 @@ public class DrawingService {
     private final MenteeService menteeService;
     private final GcsService gcsService;
 
+    public Drawing findById(Long drawingId) {
+        return drawingRepository.findById(drawingId).orElseThrow(()-> new NotFoundException("해당 id를 가진 피드백 요청 없음"));
+    }
+
     // 피드백 요청
     @Transactional
     public Long createDrawing(MultipartFile file, String email, DrawingRequestDto drawingRequestDto) throws IOException {
@@ -68,7 +72,7 @@ public class DrawingService {
 
         Mentee mentee = menteeService.findOneByEmail(email);
 
-        Drawing drawing = drawingRepository.findById(id).orElseThrow(() -> new NotFoundException("해당 id를 가진 피드백 요청 없음"));
+        Drawing drawing = findById(id);
 
         if(drawing.getMentee() != mentee) {
             throw new NotFoundException("id가 유효하지 않음");
