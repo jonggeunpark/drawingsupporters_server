@@ -31,7 +31,7 @@ public class Feedback {
     private String feedbackType;
     private String file;
 
-    @JsonFormat(pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime registDate;
 
     //== 빌더 ==//

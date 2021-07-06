@@ -23,7 +23,7 @@ public class DetailDrawingDto {
     private String feedback_file_type;
     // private MultipartFile file;
 
-    @JsonFormat(pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime end_time;
 
     //multipartfile 수정

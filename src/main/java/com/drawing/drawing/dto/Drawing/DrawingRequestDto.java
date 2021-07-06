@@ -27,7 +27,7 @@ public class DrawingRequestDto {
     private String feedback_file_type;
     private MultipartFile file;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime end_time;
     private String phone_number;
 

@@ -33,10 +33,10 @@ public class Drawing {
     private int priceLowerLimit;
     private String phoneNumber;
 
-    @JsonFormat(pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime registDate;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime endDate;
 
     //== 빌더 ==//

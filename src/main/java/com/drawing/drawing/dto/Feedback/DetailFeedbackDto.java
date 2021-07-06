@@ -21,7 +21,7 @@ public class DetailFeedbackDto {
     private String feedback_file_type;
     private String file;
 
-    @JsonFormat(pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime end_time;
 
     public static DetailFeedbackDto of(Feedback feedback) {
