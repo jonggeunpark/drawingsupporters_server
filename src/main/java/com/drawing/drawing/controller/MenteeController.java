@@ -4,8 +4,10 @@ import com.drawing.drawing.constants.Message;
 import com.drawing.drawing.constants.ResponseMessage;
 import com.drawing.drawing.constants.StatusCode;
 import com.drawing.drawing.dto.Mentee.*;
-import com.drawing.drawing.entity.User;
+import com.drawing.drawing.dto.User.LoginRequestDto;
+import com.drawing.drawing.dto.User.LoginResponseDto;
 import com.drawing.drawing.exception.InvalidPasswordException;
+import com.drawing.drawing.exception.NotFoundException;
 import com.drawing.drawing.jwt.JwtFilter;
 import com.drawing.drawing.jwt.TokenProvider;
 import com.drawing.drawing.service.MenteeService;
@@ -37,20 +39,22 @@ public class MenteeController {
 
     // 멘티_회원가입
     @PostMapping("/signup")
-    public ResponseEntity<Message> signup(@Valid @RequestBody SignupRequestDto signupRequestDto) {
+    public ResponseEntity<Message> signup(@Valid @RequestBody MenteeSignupRequestDto menteeSignupRequestDto) {
 
-        menteeService.signup(signupRequestDto);
-        Message message = new Message(StatusCode.OK, ResponseMessage.CREATE_MENTEE);
+        menteeService.signup(menteeSignupRequestDto);
+        Message message = new Message(StatusCode.OK, ResponseMessage.SIGNUP_SUCCESS);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
+    /*
     // 멘티_로그인
     @PostMapping("/login")
     public ResponseEntity<Message> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
 
-
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginRequestDto.getEmail(), loginRequestDto.getPassword());
+
+        if(!userService.isMentee()) throw new NotFoundException(": user type does not match");
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
@@ -78,33 +82,5 @@ public class MenteeController {
         Message message = new Message(StatusCode.OK, ResponseMessage.LOGIN_SUCCESS);
         return new ResponseEntity<>(message, httpHeaders, HttpStatus.OK);
     }
-
-    // 멘티_이메일_중복_확인
-    @PostMapping("/check-email")
-    public ResponseEntity<Message> checkEmail(@Valid @RequestBody EmailDto emailDto) {
-
-        DuplicateResponseDto response = menteeService.checkEmail(emailDto);
-
-        Message message = new Message(StatusCode.OK, ResponseMessage.EMAIL_CHECK_SUCCESS, response);
-        return new ResponseEntity<>(message, HttpStatus.OK);
-    }
-
-    // 멘티_닉네임_중복_확인
-    @PostMapping("/check-nickname")
-    public ResponseEntity<Message> checkNickname(@Valid @RequestBody NicknameDto nicknameDto) {
-
-        DuplicateResponseDto response = menteeService.checkNickname(nicknameDto);
-
-        Message message = new Message(StatusCode.OK, ResponseMessage.NICKNAME_CHECK_SUCCESS, response);
-        return new ResponseEntity<>(message, HttpStatus.OK);
-    }
-
-    // 멘티_유저_정보_확인
-    @GetMapping("/info")
-    public ResponseEntity<Message> getNickname() {
-        Authentication user = SecurityContextHolder.getContext().getAuthentication();
-
-        Message message = new Message(StatusCode.OK, ResponseMessage.READ_USER_INFO_SUCCESS, menteeService.getNickname(user.getName()));
-        return new ResponseEntity<>(message, HttpStatus.OK);
-    }
+    */
 }

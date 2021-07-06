@@ -1,6 +1,7 @@
 package com.drawing.drawing.service;
 
 import com.drawing.drawing.dto.Mentee.*;
+import com.drawing.drawing.dto.User.LoginRequestDto;
 import com.drawing.drawing.entity.Mentee;
 import com.drawing.drawing.exception.EmailDuplicateException;
 import com.drawing.drawing.exception.InvalidPasswordException;
@@ -9,6 +10,7 @@ import com.drawing.drawing.exception.NotFoundException;
 import com.drawing.drawing.jwt.JwtFilter;
 import com.drawing.drawing.jwt.TokenProvider;
 import com.drawing.drawing.repository.MenteeRepository;
+import com.drawing.drawing.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -29,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MenteeService {
 
     private final MenteeRepository menteeRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -39,22 +42,21 @@ public class MenteeService {
 
     // 회원가입
     @Transactional
-    public Mentee signup(SignupRequestDto signupRequestDto) {
+    public Mentee signup(MenteeSignupRequestDto menteeSignupRequestDto) {
 
-        // 이메일 중복 가입
-        if (menteeRepository.findOneWithAuthoritiesByEmail(signupRequestDto.getEmail()).orElse(null) != null) {
-            throw new EmailDuplicateException(signupRequestDto.getEmail());
+        // 이메일 중복
+        if (userRepository.findOneWithAuthoritiesByEmail(menteeSignupRequestDto.getEmail()).orElse(null) != null) {
+            throw new EmailDuplicateException(menteeSignupRequestDto.getEmail());
         }
 
         // 닉네임 중복
-        if (menteeRepository.findOneByNickname(signupRequestDto.getNickname()).orElse(null) != null) {
-            throw new NicknameDuplicateException(signupRequestDto.getNickname());
+        if (userRepository.findOneByNickname(menteeSignupRequestDto.getNickname()).orElse(null) != null) {
+            throw new NicknameDuplicateException(menteeSignupRequestDto.getNickname());
         }
 
-        signupRequestDto.setPassword(passwordEncoder.encode(signupRequestDto.getPassword()));
-        return menteeRepository.save(signupRequestDto.toEntity());
+        menteeSignupRequestDto.setPassword(passwordEncoder.encode(menteeSignupRequestDto.getPassword()));
+        return menteeRepository.save(menteeSignupRequestDto.toEntity());
     }
-
 
     // 로그인
     @Transactional
@@ -82,24 +84,6 @@ public class MenteeService {
         }
 
         return httpHeaders;
-    }
-
-
-    // 이메일 중복 확인
-    public DuplicateResponseDto checkEmail(EmailDto emailDto) {
-
-        return DuplicateResponseDto.of(menteeRepository.findOneWithAuthoritiesByEmail(emailDto.getEmail()).orElse(null) != null);
-    }
-
-    // 닉네임 중복 확인
-    public DuplicateResponseDto checkNickname(NicknameDto nicknameDto) {
-
-        return DuplicateResponseDto.of(menteeRepository.findOneByNickname(nicknameDto.getNickname()).orElse(null) != null);
-    }
-
-    // 유저 정보 확인
-    public String getNickname(String email) {
-        return findOneByEmail(email).getNickname();
     }
 
 }

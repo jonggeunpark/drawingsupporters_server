@@ -1,7 +1,6 @@
-package com.drawing.drawing.dto.Mentee;
+package com.drawing.drawing.dto.User;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @AllArgsConstructor
 public class DuplicateResponseDto {

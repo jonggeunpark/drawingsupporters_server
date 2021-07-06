@@ -12,7 +12,5 @@ public interface MenteeRepository extends JpaRepository<Mentee, Long> {
     @EntityGraph(attributePaths = "authorities")
     Optional<Mentee> findOneWithAuthoritiesByEmail(String email);
 
-    Optional<Mentee> findOneByNickname(String nickname);
-
     Optional<Mentee> findOneByEmail(String email);
 }
