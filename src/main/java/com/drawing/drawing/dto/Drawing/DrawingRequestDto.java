@@ -25,7 +25,7 @@ public class DrawingRequestDto {
 
     public Drawing toEntity(Mentee mentee, String uuid, String filename) {
 
-        LocalDateTime dateTime = LocalDateTime.parse(end_time, DateTimeFormatter.ISO_DATE);
+        LocalDateTime dateTime = LocalDateTime.parse(end_time, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
         return Drawing.builder()
                 .mentee(mentee)
