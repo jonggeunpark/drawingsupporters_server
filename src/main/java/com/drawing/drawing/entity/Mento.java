@@ -20,9 +20,11 @@ public class Mento extends User{
     @OneToMany(mappedBy = "mento", cascade = CascadeType.ALL)
     private Set<Feedback> feedbackSet = new HashSet<>();
 
+    /*
     //== 빌더 ==//
     @Builder
     public Mento (Set<Feedback> feedbackSet) {
         this.feedbackSet = feedbackSet;
     }
+    */
 }
