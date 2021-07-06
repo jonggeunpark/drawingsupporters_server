@@ -17,6 +17,7 @@ public class ResponseMessage {
     public static final String DUPLICATE_EMAIL = "이미 등록되어있는 이메일입니다.";
     public static final String DUPLICATE_NICKNAME = "이미 등록되어있는 닉네임입니다.";
     public static final String INVALID_PASSWORD = "비밀번호가 유효하지 않습니다.";
-    public static final String NOT_FOUND = "해당 ID를 찾을 수 없음";
+    public static final String NOT_FOUND = "해당 ID를 찾을 수 없습니다.";
+    public static final String UNAUTHORIZED = "권한이 없습니다.";
 
 }

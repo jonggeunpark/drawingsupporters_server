@@ -17,6 +17,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(message,HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(UnauthorizedException.class)
+    private ResponseEntity<Message> UnauthorizedException(UnauthorizedException e) {
+        Message message = new Message(StatusCode.UNAUTHORIZED, ResponseMessage.UNAUTHORIZED);
+        return new ResponseEntity<>(message,HttpStatus.UNAUTHORIZED);
+    }
+
     @ExceptionHandler(EmailDuplicateException.class)
     public ResponseEntity<Message> MenteeDuplicateException(EmailDuplicateException e) {
         Message message = new Message(StatusCode.BAD_REQUEST, ResponseMessage.DUPLICATE_EMAIL);

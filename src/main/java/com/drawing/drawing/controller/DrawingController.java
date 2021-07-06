@@ -10,8 +10,10 @@ import com.drawing.drawing.dto.Feedback.DetailFeedbackDto;
 import com.drawing.drawing.dto.Feedback.SimpleFeedbackDto;
 import com.drawing.drawing.entity.Mentee;
 import com.drawing.drawing.entity.User;
+import com.drawing.drawing.exception.UnauthorizedException;
 import com.drawing.drawing.service.DrawingService;
 import com.drawing.drawing.service.MenteeService;
+import com.drawing.drawing.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -36,6 +38,7 @@ public class DrawingController {
     private String storage;
 
     private final DrawingService drawingService;
+    private final UserService userService;
     private final MenteeService menteeService;
 
     // 피드백 요청 생성
@@ -46,6 +49,8 @@ public class DrawingController {
             @RequestPart("file") @Valid @NotNull @NotBlank MultipartFile file) throws IOException {
 
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
+
+        if(!userService.isMentee()) throw new UnauthorizedException(": user type does not match");
 
         Long id = drawingService.createDrawing(file, user.getName(), drawingRequestDto);
 
@@ -60,6 +65,8 @@ public class DrawingController {
 
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
+        if(!userService.isMentee()) throw new UnauthorizedException(": user type does not match");
+
         List<SimpleDrawingDto> response = drawingService.readAllDrawing(user.getName(), storage);
 
         Message message = new Message(StatusCode.OK, ResponseMessage.READ_ALL_DRAWING, response);
@@ -72,6 +79,8 @@ public class DrawingController {
 
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
+        if(!userService.isMentee()) throw new UnauthorizedException(": user type does not match");
+        
         DetailDrawingDto response = drawingService.readDrawing(user.getName(), drawingId);
 
         Message message = new Message(StatusCode.OK, ResponseMessage.READ_DRAWING, response);
