@@ -19,7 +19,6 @@ public class DetailFeedbackDto {
     private PaymentDto payment;
     private List<String> feedback_type;
     private String feedback_file_type;
-    private String file;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime end_time;
@@ -28,7 +27,7 @@ public class DetailFeedbackDto {
         Drawing drawing = feedback.getDrawing();
         PaymentDto payment = PaymentDto.of(drawing.getPriceLowerLimit(), drawing.getPriceUpperLimit());
         return new DetailFeedbackDto(feedback.getTitle(), feedback.getDescription(), payment,
-                Arrays.asList(drawing.getFeedbackType().split(",")), feedback.getFeedbackType(), feedback.getFile(), feedback.getRegistDate());
+                Arrays.asList(drawing.getFeedbackType().split(",")), feedback.getDrawing().getFeedbackType(), feedback.getRegistDate());
     }
 
 }
