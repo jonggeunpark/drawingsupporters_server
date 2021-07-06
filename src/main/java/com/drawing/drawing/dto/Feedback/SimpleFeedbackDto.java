@@ -13,6 +13,6 @@ public class SimpleFeedbackDto {
     private String thumbnail;
 
     public static SimpleFeedbackDto of(Feedback feedback) {
-        return new SimpleFeedbackDto(feedback.getId(), feedback.getTitle(), feedback.getThumbnail());
+        return new SimpleFeedbackDto(feedback.getId(), feedback.getTitle(), "");
     }
 }
