@@ -55,7 +55,12 @@ public class UserController {
     }
     */
 
-    // 로그인
+    /**
+     * 로그인
+     * METHOD : POST
+     * URI : /api/user/login
+     * 권한 : 없음
+     */
     @PostMapping("/login")
     public ResponseEntity<Message> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
 
@@ -89,7 +94,12 @@ public class UserController {
         return new ResponseEntity<>(message, httpHeaders, HttpStatus.OK);
     }
 
-    // 이메일_중복_확인
+    /**
+     * 이메일 중복 확인
+     * METHOD : POST
+     * URI : /api/user/check-email
+     * 권한 : 없음
+     */
     @PostMapping("/check-email")
     public ResponseEntity<Message> checkEmail(@Valid @RequestBody EmailDto emailDto) {
 
@@ -99,7 +109,12 @@ public class UserController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    // 닉네임_중복_확인
+    /**
+     * 닉네임 중복 확인
+     * METHOD : POST
+     * URI : /api/user/check-nickname
+     * 권한 : 없음
+     */
     @PostMapping("/check-nickname")
     public ResponseEntity<Message> checkNickname(@Valid @RequestBody NicknameDto nicknameDto) {
 
@@ -109,7 +124,12 @@ public class UserController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    // 유저_정보_확인
+    /**
+     * 닉네임 중복 확인
+     * METHOD : GET
+     * URI : /api/user/info
+     * 권한 : 로그인
+     */
     @GetMapping("/info")
     public ResponseEntity<Message> getNickname() {
         Authentication user = SecurityContextHolder.getContext().getAuthentication();

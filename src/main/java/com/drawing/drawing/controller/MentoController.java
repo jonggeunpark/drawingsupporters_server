@@ -38,7 +38,12 @@ public class MentoController {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    // 멘토_회원가입
+    /**
+     * 회원가입_멘토
+     * METHOD : POST
+     * URI : /api/mento/signup
+     * 권한 : 없음
+     */
     @PostMapping("/signup")
     public ResponseEntity<Message> signup(@Valid @RequestBody MentoSignupRequestDto mentoSignupRequestDto) {
 

@@ -37,7 +37,12 @@ public class MenteeController {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    // 멘티_회원가입
+    /**
+     * 회원가입_멘티
+     * METHOD : POST
+     * URI : /api/mentee/signup
+     * 권한 : 없음
+     */
     @PostMapping("/signup")
     public ResponseEntity<Message> signup(@Valid @RequestBody MenteeSignupRequestDto menteeSignupRequestDto) {
 

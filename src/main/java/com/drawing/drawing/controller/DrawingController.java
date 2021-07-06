@@ -41,7 +41,13 @@ public class DrawingController {
     private final UserService userService;
     private final MenteeService menteeService;
 
-    // 피드백 요청 생성
+    /**
+     * 피드백 요청 생성
+     * METHOD : POST
+     * URI : /api/drawing
+     * 권한 : 로그인, 학생
+     * file과 json을 동시에 받음
+     */
     @PostMapping(consumes = {"multipart/form-data"})
     @ResponseBody
     public ResponseEntity<Message> createDrawing(
@@ -59,7 +65,12 @@ public class DrawingController {
 
     }
 
-    // 피드백 요청 전체 조회
+    /**
+     * 피드백 요청 전체 조회
+     * METHOD : GET
+     * URI : /api/drawing
+     * 권한 : 로그인, 학생
+     */
     @GetMapping()
     public ResponseEntity<Message> readAllDrawing() {
 
@@ -73,14 +84,20 @@ public class DrawingController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    // 피드백 요청 상세 조회
+    /**
+     * 피드백 요청 상세 조회
+     * METHOD : GET
+     * URI : /api/drawing/{drawingId}
+     * 권한 : 로그인, 학생
+     * 해당 drawing이 학생의 drawing 이어야함
+     */
     @GetMapping("/{drawingId}")
     private ResponseEntity<Message> readDrawing(@PathVariable("drawingId") Long drawingId) {
 
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
         if(!userService.isMentee()) throw new UnauthorizedException(": user type does not match");
-        
+
         DetailDrawingDto response = drawingService.readDrawing(user.getName(), drawingId);
 
         Message message = new Message(StatusCode.OK, ResponseMessage.READ_DRAWING, response);
