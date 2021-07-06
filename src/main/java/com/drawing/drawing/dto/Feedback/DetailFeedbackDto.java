@@ -16,7 +16,8 @@ public class DetailFeedbackDto {
 
     private String title;
     private String description;
-    private PaymentDto payment;
+    private int price_lower_limit;
+    private int price_upper_limit;
     private List<String> feedback_type;
     private String feedback_file_type;
 
@@ -25,9 +26,9 @@ public class DetailFeedbackDto {
 
     public static DetailFeedbackDto of(Feedback feedback) {
         Drawing drawing = feedback.getDrawing();
-        PaymentDto payment = PaymentDto.of(drawing.getPriceLowerLimit(), drawing.getPriceUpperLimit());
-        return new DetailFeedbackDto(feedback.getTitle(), feedback.getDescription(), payment,
-                Arrays.asList(drawing.getFeedbackType().split(",")), feedback.getDrawing().getFeedbackType(), feedback.getRegistDate());
+        return new DetailFeedbackDto(feedback.getTitle(), feedback.getDescription(), drawing.getPriceLowerLimit(),
+                drawing.getPriceUpperLimit(), Arrays.asList(drawing.getFeedbackType().split(",")),
+                feedback.getDrawing().getFeedbackType(), feedback.getRegistDate());
     }
 
 }
