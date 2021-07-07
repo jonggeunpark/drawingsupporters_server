@@ -2,7 +2,6 @@ package com.drawing.drawing.dto.Drawing;
 
 
 import com.drawing.drawing.entity.*;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -37,7 +36,7 @@ public class DrawingRequestDto {
                 .filename(filename)
                 .phoneNumber(phone_number)
                 .registDate(LocalDate.now())
-                .status(DrawingStatus.REQUESTED)
+                .drawingStatus(DrawingStatus.REQUESTED)
                 .build();
     }
 }
