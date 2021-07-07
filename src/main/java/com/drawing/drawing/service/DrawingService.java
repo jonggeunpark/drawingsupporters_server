@@ -87,7 +87,7 @@ public class DrawingService {
 
     // 피드백 요청 접수 ( FeedbackStatus requested -> accepted로 변경, Feedback 생성 )
     @Transactional
-    public void updateDrawingStatus(String email, Long drawingId) {
+    public Long updateDrawingStatus(String email, Long drawingId) {
 
         Mento mento = mentoService.findOneByEmail(email);
         Drawing drawing = findById(drawingId);
@@ -106,6 +106,6 @@ public class DrawingService {
                 .build();
 
         saveDrawing(drawing);
-        feedbackRepository.save(feedback);
+        return feedbackRepository.save(feedback).getId();
     }
 }

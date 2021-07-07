@@ -119,9 +119,9 @@ public class DrawingController {
 
         if(!userService.isMento()) throw new UnauthorizedException(": user type does not match");
 
-        drawingService.updateDrawingStatus(user.getName(), drawingId);
+        Long feedback_id = drawingService.updateDrawingStatus(user.getName(), drawingId);
 
-        Message message = new Message(StatusCode.OK, ResponseMessage.UPDATE_DRAWING_STATUS_ACCEPTED);
+        Message message = new Message(StatusCode.OK, ResponseMessage.UPDATE_DRAWING_STATUS_ACCEPTED, feedback_id);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
