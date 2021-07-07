@@ -11,6 +11,7 @@ import com.drawing.drawing.exception.UnauthorizedException;
 import com.drawing.drawing.service.FeedbackService;
 import com.drawing.drawing.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -29,6 +30,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FeedbackController {
 
+    @Value("${storage}")
+    private String storage;
+
     private final UserService userService;
     private final FeedbackService feedbackService;
 
@@ -41,7 +45,7 @@ public class FeedbackController {
     @GetMapping()
     private ResponseEntity<Message> readAllFeedback() {
 
-        List<SimpleFeedbackDto> response = feedbackService.readAllFeedback();
+        List<SimpleFeedbackDto> response = feedbackService.readAllFeedback(storage);
 
         Message message = new Message(StatusCode.OK, ResponseMessage.READ_ALL_FEEDBACK, response);
         return new ResponseEntity<>(message, HttpStatus.OK);
@@ -97,7 +101,7 @@ public class FeedbackController {
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
         if(!userService.isMento()) throw new UnauthorizedException(": user type does not match");
 
-        List<SimpleFeedbackDto> response = feedbackService.readCompletedFeedback(user.getName());
+        List<SimpleFeedbackDto> response = feedbackService.readCompletedFeedback(user.getName(), storage);
 
         Message message = new Message(StatusCode.OK, ResponseMessage.READ_COMPLETED_FEEDBACK, response);
         return new ResponseEntity<>(message, HttpStatus.OK);

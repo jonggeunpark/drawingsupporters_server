@@ -12,7 +12,7 @@ public class SimpleFeedbackDto {
     private String title;
     private String thumbnail;
 
-    public static SimpleFeedbackDto of(Feedback feedback) {
-        return new SimpleFeedbackDto(feedback.getId(), feedback.getTitle(), "");
+    public static SimpleFeedbackDto of(Feedback feedback, String storage) {
+        return new SimpleFeedbackDto(feedback.getId(), feedback.getTitle(), storage + "/" + feedback.getUuid() + feedback.getFilename());
     }
 }

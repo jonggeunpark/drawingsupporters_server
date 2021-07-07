@@ -39,14 +39,14 @@ public class FeedbackService {
     }
 
     // 피드백 전체 조회
-    public List<SimpleFeedbackDto> readAllFeedback() {
+    public List<SimpleFeedbackDto> readAllFeedback(String storage) {
         List<Feedback> feedbackList = feedbackRepository.findAll();
 
         List<SimpleFeedbackDto> feedbackDtoList = new ArrayList<>();
 
         for(Feedback feedback: feedbackList) {
             if(feedback.getStatus() == FeedbackStatus.COMPLETED){
-                feedbackDtoList.add(SimpleFeedbackDto.of(feedback));
+                feedbackDtoList.add(SimpleFeedbackDto.of(feedback, storage));
             }
         }
 
@@ -92,13 +92,13 @@ public class FeedbackService {
     }
 
     // 완료 상태 피드백 목록 조회
-    public List<SimpleFeedbackDto> readCompletedFeedback(String email) {
+    public List<SimpleFeedbackDto> readCompletedFeedback(String email, String storage) {
         Mento mento = mentoService.findOneByEmail(email);
         List<SimpleFeedbackDto> feedbackDtoList = new ArrayList<>();
 
         for(Feedback feedback: mento.getFeedbackSet()) {
             if(feedback.getStatus() == FeedbackStatus.COMPLETED){
-                feedbackDtoList.add(SimpleFeedbackDto.of(feedback));
+                feedbackDtoList.add(SimpleFeedbackDto.of(feedback, storage));
             }
         }
 
