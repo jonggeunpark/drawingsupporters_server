@@ -4,15 +4,18 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import com.google.cloud.storage.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -21,6 +24,12 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 @RequiredArgsConstructor
 public class GcsService {
+
+    @Value("${projectId}")
+    private String projectId;
+
+    @Value("${bucketName}")
+    private String bucketName;
 
     private final Storage storage;
 
@@ -76,5 +85,23 @@ public class GcsService {
         if(file1.delete()){ System.out.println("파일삭제 성공"); }else{ System.out.println("파일삭제 실패"); }
 
         return blobInfo;
+    }
+
+
+    // signed url 생성
+    public URL generateV4GetObjectSignedUrl(String objectName) throws StorageException {
+
+        // Define resource
+        BlobInfo blobInfo = BlobInfo.newBuilder(BlobId.of(bucketName, objectName)).build();
+
+        URL url =
+                storage.signUrl(blobInfo, 15, TimeUnit.MINUTES, Storage.SignUrlOption.withV4Signature());
+
+        System.out.println("Generated GET signed URL:");
+        System.out.println(url);
+        System.out.println("You can use this URL with any user agent, for example:");
+        System.out.println("curl '" + url + "'");
+
+        return url;
     }
 }
