@@ -30,7 +30,7 @@ public class Feedback {
     private String feedbackFileType;
     private String uuid;
     private String filename;
-    private FeedbackStatus feedbackStatus;
+    private FeedbackStatus status;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate acceptDate;
@@ -68,7 +68,7 @@ public class Feedback {
         this.mento = mento;
         mento.getFeedbackSet().add(this);
         this.acceptDate = acceptDate;
-        this.feedbackStatus = FeedbackStatus.ACCEPTED;
+        this.status = FeedbackStatus.ACCEPTED;
     }
 
     public void completeFeedback(String title, String description, int price,
@@ -80,8 +80,8 @@ public class Feedback {
         this.uuid = uuid;
         this.filename = filename;
         this.completeDate = completeDate;
-        this.feedbackStatus = FeedbackStatus.COMPLETED;
-
+        this.status = FeedbackStatus.COMPLETED;
+        this.drawing.changeDrawingStatus(DrawingStatus.COMPLETED);
     }
 
 }

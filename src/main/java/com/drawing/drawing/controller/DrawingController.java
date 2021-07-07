@@ -6,10 +6,7 @@ import com.drawing.drawing.constants.StatusCode;
 import com.drawing.drawing.dto.Drawing.DetailDrawingDto;
 import com.drawing.drawing.dto.Drawing.DrawingRequestDto;
 import com.drawing.drawing.dto.Drawing.SimpleDrawingDto;
-import com.drawing.drawing.dto.Feedback.DetailFeedbackDto;
 import com.drawing.drawing.dto.Feedback.SimpleFeedbackDto;
-import com.drawing.drawing.entity.Mentee;
-import com.drawing.drawing.entity.User;
 import com.drawing.drawing.exception.UnauthorizedException;
 import com.drawing.drawing.service.DrawingService;
 import com.drawing.drawing.service.FeedbackService;
@@ -90,17 +87,25 @@ public class DrawingController {
      * 피드백 요청 상세 조회
      * METHOD : GET
      * URI : /api/drawing/{drawingId}
-     * 권한 : 로그인, 학생
-     * 해당 drawing이 학생의 drawing 이어야함
+     * 권한 : 로그인, 학생 or 전문가
+     * 학생일 경우 : 해당 drawing이 학생의 drawing 이어야함
+     * 전문가일 경우 : 조건 없음
      */
     @GetMapping("/{drawingId}")
     private ResponseEntity<Message> readDrawing(@PathVariable("drawingId") Long drawingId) {
 
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
-        if(!userService.isMentee()) throw new UnauthorizedException(": user type does not match");
+        DetailDrawingDto response = null;
 
-        DetailDrawingDto response = drawingService.readDrawing(user.getName(), drawingId);
+        // 학생일 경우
+        if(userService.isMentee()) {
+            response = drawingService.readDrawingByMentee(user.getName(), drawingId);
+        } else if (userService.isMento()) {
+            response = drawingService.readDrawingByMento(drawingId);
+        } else {
+            throw new UnauthorizedException(": user type does not match");
+        }
 
         Message message = new Message(StatusCode.OK, ResponseMessage.READ_DRAWING, response);
         return new ResponseEntity<>(message, HttpStatus.OK);
@@ -125,6 +130,41 @@ public class DrawingController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
+    /**
+     * 요청 상태 피드백 요청 목록 조회
+     * METHOD : GET
+     * URI : /api/drawing/requested
+     * 권한 : 로그인, 전문가
+     */
+    @GetMapping("/requested")
+    private ResponseEntity<Message> readRequestedDrawing() {
+
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+
+        if(!userService.isMento()) throw new UnauthorizedException(": user type does not match");
+
+        List<SimpleDrawingDto> response = drawingService.readRequestedDrawing(user.getName(), storage);
+
+        Message message = new Message(StatusCode.OK, ResponseMessage.READ_REQUESTED_DRAWING, response);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
 
 
+    /**
+     * 접수 상태 피드백 요청 목록 조회
+     * METHOD : GET
+     * URI : /api/drawing/accepted
+     * 권한 : 로그인, 전문가
+     */
+    @GetMapping("/accepted")
+    private ResponseEntity<Message> readAcceptedFeedback() {
+
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+        if(!userService.isMento()) throw new UnauthorizedException(": user type does not match");
+
+        List<SimpleDrawingDto> response = drawingService.readAcceptedDrawing(user.getName(), storage);
+
+        Message message = new Message(StatusCode.OK, ResponseMessage.READ_ACCEPTED_DRAWING, response);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
 }

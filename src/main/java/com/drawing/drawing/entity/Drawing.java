@@ -61,7 +61,7 @@ public class Drawing {
         this.endDate = endDate;
     }
 
-    public void ChangeDrawingStatus(DrawingStatus drawingStatus){
+    public void changeDrawingStatus(DrawingStatus drawingStatus){
         this.drawingStatus = drawingStatus;
     }
 

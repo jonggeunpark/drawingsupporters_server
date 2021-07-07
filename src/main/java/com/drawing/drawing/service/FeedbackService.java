@@ -1,6 +1,5 @@
 package com.drawing.drawing.service;
 
-import com.drawing.drawing.dto.Drawing.DrawingRequestDto;
 import com.drawing.drawing.dto.Feedback.DetailFeedbackDto;
 import com.drawing.drawing.dto.Feedback.FeedbackReqeustDto;
 import com.drawing.drawing.dto.Feedback.SimpleFeedbackDto;
@@ -43,12 +42,10 @@ public class FeedbackService {
     public List<SimpleFeedbackDto> readAllFeedback() {
         List<Feedback> feedbackList = feedbackRepository.findAll();
 
-
-
         List<SimpleFeedbackDto> feedbackDtoList = new ArrayList<>();
 
         for(Feedback feedback: feedbackList) {
-            if(feedback.getFeedbackStatus() == FeedbackStatus.COMPLETED){
+            if(feedback.getStatus() == FeedbackStatus.COMPLETED){
                 feedbackDtoList.add(SimpleFeedbackDto.of(feedback));
             }
         }
@@ -92,5 +89,19 @@ public class FeedbackService {
                 uuid.toString(), file.getOriginalFilename(), LocalDate.now());
 
         return saveFeedback(feedback);
+    }
+
+    // 완료 상태 피드백 목록 조회
+    public List<SimpleFeedbackDto> readCompletedFeedback(String email) {
+        Mento mento = mentoService.findOneByEmail(email);
+        List<SimpleFeedbackDto> feedbackDtoList = new ArrayList<>();
+
+        for(Feedback feedback: mento.getFeedbackSet()) {
+            if(feedback.getStatus() == FeedbackStatus.COMPLETED){
+                feedbackDtoList.add(SimpleFeedbackDto.of(feedback));
+            }
+        }
+
+        return feedbackDtoList;
     }
 }

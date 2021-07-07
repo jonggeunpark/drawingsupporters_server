@@ -17,6 +17,6 @@ public class SimpleDrawingDto {
 
     public static SimpleDrawingDto of(Drawing drawing, String storage) {
 
-        return new SimpleDrawingDto(drawing.getId(), drawing.getTitle(), storage + "/" + drawing.getUuid() + "/" + drawing.getFilename());
+        return new SimpleDrawingDto(drawing.getId(), drawing.getTitle(), storage + "/" + drawing.getUuid() + drawing.getFilename());
     }
 }

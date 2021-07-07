@@ -3,6 +3,7 @@ package com.drawing.drawing.service;
 import com.drawing.drawing.dto.Drawing.DetailDrawingDto;
 import com.drawing.drawing.dto.Drawing.DrawingRequestDto;
 import com.drawing.drawing.dto.Drawing.SimpleDrawingDto;
+import com.drawing.drawing.dto.Feedback.SimpleFeedbackDto;
 import com.drawing.drawing.entity.*;
 import com.drawing.drawing.exception.NotFoundException;
 import com.drawing.drawing.exception.UnauthorizedException;
@@ -71,8 +72,8 @@ public class DrawingService {
         return simpleDrawingDtoList;
     }
 
-    // 피드백 요청 상세 조회
-    public DetailDrawingDto readDrawing(String email, Long id) {
+    // 피드백 요청 상세 조회 - 멘티
+    public DetailDrawingDto readDrawingByMentee(String email, Long id) {
 
         Mentee mentee = menteeService.findOneByEmail(email);
 
@@ -84,6 +85,14 @@ public class DrawingService {
 
         return DetailDrawingDto.of(drawing);
     }
+
+    // 피드백 요청 상세 조회 - 멘토
+    public DetailDrawingDto readDrawingByMento(Long drawingId) {
+
+        Drawing drawing = findById(drawingId);
+        return DetailDrawingDto.of(drawing);
+    }
+
 
     // 피드백 요청 접수 ( FeedbackStatus requested -> accepted로 변경, Feedback 생성 )
     @Transactional
@@ -97,15 +106,47 @@ public class DrawingService {
             throw new UnauthorizedException("이미 접수된 피드백 요청입니다.");
         }
 
-        drawing.ChangeDrawingStatus(DrawingStatus.ACCEPTED);
+        drawing.changeDrawingStatus(DrawingStatus.ACCEPTED);
 
         Feedback feedback = Feedback.builder()
                 .drawing(drawing)
                 .mento(mento)
+
                 .acceptDate(LocalDate.now())
                 .build();
 
         saveDrawing(drawing);
         return feedbackRepository.save(feedback).getId();
+    }
+
+    // 요청 상태 피드백 요청 목록 조회
+    public List<SimpleDrawingDto> readRequestedDrawing(String email, String storage) {
+
+        Mento mento = mentoService.findOneByEmail(email);
+        List<Drawing> drawingList = drawingRepository.findAll();
+
+        List<SimpleDrawingDto> simpleDrawingDtoList = new ArrayList<>();
+
+        for(Drawing drawing : drawingList) {
+            if(drawing.getDrawingStatus() == DrawingStatus.REQUESTED)
+            simpleDrawingDtoList.add(SimpleDrawingDto.of(drawing, storage));
+        }
+
+        return simpleDrawingDtoList;
+    }
+
+    // 접수 상태 피드백 목록 조회
+    public List<SimpleDrawingDto> readAcceptedDrawing(String email, String storage) {
+        Mento mento = mentoService.findOneByEmail(email);
+        List<SimpleDrawingDto> drawingDtoList = new ArrayList<>();
+
+        for(Feedback feedback: mento.getFeedbackSet()) {
+            if(feedback.getStatus() == FeedbackStatus.ACCEPTED){
+
+                drawingDtoList.add(SimpleDrawingDto.of(feedback.getDrawing(), storage));
+            }
+        }
+
+        return drawingDtoList;
     }
 }
