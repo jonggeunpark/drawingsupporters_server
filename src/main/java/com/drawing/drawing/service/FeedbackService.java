@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,8 @@ public class FeedbackService {
             throw new NotFoundException("id가 유효하지 않음");
         }
 
-        return DetailFeedbackDto.of(feedback);
+        URL downloadURL = gcsService.generateV4GetObjectSignedUrl(feedback.getUuid()+feedback.getFilename());
+        return DetailFeedbackDto.of(feedback, downloadURL);
     }
 
     // 피드백 생성

@@ -9,17 +9,19 @@ import com.drawing.drawing.exception.NotFoundException;
 import com.drawing.drawing.exception.UnauthorizedException;
 import com.drawing.drawing.repository.DrawingRepository;
 import com.drawing.drawing.repository.FeedbackRepository;
-import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Transactional(readOnly = true)
@@ -83,14 +85,17 @@ public class DrawingService {
             throw new NotFoundException("id가 유효하지 않음");
         }
 
-        return DetailDrawingDto.of(drawing);
+        URL url = gcsService.generateV4GetObjectSignedUrl(drawing.getUuid() + drawing.getFilename());
+        return DetailDrawingDto.of(drawing, url);
     }
 
     // 피드백 요청 상세 조회 - 멘토
     public DetailDrawingDto readDrawingByMento(Long drawingId) {
 
         Drawing drawing = findById(drawingId);
-        return DetailDrawingDto.of(drawing);
+
+        URL url = gcsService.generateV4GetObjectSignedUrl(drawing.getUuid() + drawing.getFilename());
+        return DetailDrawingDto.of(drawing, url);
     }
 
 

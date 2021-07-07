@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -24,11 +25,13 @@ public class DetailFeedbackDto {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate end_time;
 
-    public static DetailFeedbackDto of(Feedback feedback) {
+    private URL download_url;
+
+    public static DetailFeedbackDto of(Feedback feedback, URL download_link) {
         Drawing drawing = feedback.getDrawing();
         return new DetailFeedbackDto(feedback.getTitle(), feedback.getDescription(), drawing.getPriceLowerLimit(),
                 drawing.getPriceUpperLimit(), Arrays.asList(drawing.getFeedbackType().split(",")),
-                feedback.getDrawing().getFeedbackType(), feedback.getCompleteDate());
+                feedback.getDrawing().getFeedbackType(), feedback.getCompleteDate(), download_link);
     }
 
 }
