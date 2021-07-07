@@ -2,7 +2,6 @@ package com.drawing.drawing.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -31,7 +30,7 @@ public class Drawing {
     private int priceUpperLimit;
     private int priceLowerLimit;
     private String phoneNumber;
-    private DrawingStatus status;
+    private DrawingStatus drawingStatus;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate registDate;
@@ -41,15 +40,16 @@ public class Drawing {
 
     //== 빌더 ==//
     @Builder
-    public Drawing(Mentee mentee, String title, String description, String feedbackType, int priceUpperLimit,
+    public Drawing(Mentee mentee, Feedback feedback, String title, String description, String feedbackType, int priceUpperLimit,
                    int priceLowerLimit, String phoneNumber, LocalDate registDate, String uuid, String filename,
-                   LocalDate endDate, DrawingStatus status) {
+                   LocalDate endDate, DrawingStatus drawingStatus) {
 
         this.mentee = mentee;
         mentee.getDrawingSet().add(this);
 
+        this.feedback = null;
         this.title = title;
-        this.status = status;
+        this.drawingStatus = drawingStatus;
         this.description = description;
         this.feedbackType = feedbackType;
         this.priceLowerLimit = priceLowerLimit;

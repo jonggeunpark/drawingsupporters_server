@@ -49,5 +49,29 @@ public class Feedback {
         this.uuid = uuid;
         this.filename = filename;
         this.registDate = registDate;
+
+    //== 빌더 ==//
+    @Builder
+    public Feedback (Drawing drawing, Mento mento, LocalDate acceptDate) {
+        this.drawing = drawing;
+        drawing.setFeedback(this);
+        this.mento = mento;
+        mento.getFeedbackSet().add(this);
+        this.acceptDate = acceptDate;
+        this.feedbackStatus = FeedbackStatus.ACCEPTED;
     }
+
+    public void completeFeedback(String title, String description, int price,
+                                 String feedbackFileType, String uuid, String filename, LocalDate completeDate) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.feedbackFileType = feedbackFileType;
+        this.uuid = uuid;
+        this.filename = filename;
+        this.completeDate = completeDate;
+        this.feedbackStatus = FeedbackStatus.COMPLETED;
+
+    }
+
 }

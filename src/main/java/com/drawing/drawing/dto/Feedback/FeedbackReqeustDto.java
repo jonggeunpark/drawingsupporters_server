@@ -11,12 +11,12 @@ import java.time.LocalDate;
 @Getter
 public class FeedbackReqeustDto {
 
-    private Long drawing_id;
     private String title;
     private String description;
     private int price;
     private String feedback_file_type;
 
+    /*
     public Feedback toEntity(Mento mento, Drawing drawing, String uuid, String filename) {
         return Feedback.builder()
                 .mento(mento)
@@ -27,8 +27,8 @@ public class FeedbackReqeustDto {
                 .feedbackFileType(feedback_file_type)
                 .uuid(uuid)
                 .filename(filename)
-                .registDate(LocalDate.now())
+                .completeDate(LocalDate.now())
                 .build();
     }
-
+*/
 }

@@ -28,7 +28,7 @@ public class DetailFeedbackDto {
         Drawing drawing = feedback.getDrawing();
         return new DetailFeedbackDto(feedback.getTitle(), feedback.getDescription(), drawing.getPriceLowerLimit(),
                 drawing.getPriceUpperLimit(), Arrays.asList(drawing.getFeedbackType().split(",")),
-                feedback.getDrawing().getFeedbackType(), feedback.getRegistDate());
+                feedback.getDrawing().getFeedbackType(), feedback.getCompleteDate());
     }
 
 }
