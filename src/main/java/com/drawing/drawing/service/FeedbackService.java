@@ -4,10 +4,7 @@ import com.drawing.drawing.dto.Drawing.DrawingRequestDto;
 import com.drawing.drawing.dto.Feedback.DetailFeedbackDto;
 import com.drawing.drawing.dto.Feedback.FeedbackReqeustDto;
 import com.drawing.drawing.dto.Feedback.SimpleFeedbackDto;
-import com.drawing.drawing.entity.Drawing;
-import com.drawing.drawing.entity.Feedback;
-import com.drawing.drawing.entity.Mentee;
-import com.drawing.drawing.entity.Mento;
+import com.drawing.drawing.entity.*;
 import com.drawing.drawing.exception.NotFoundException;
 import com.drawing.drawing.repository.FeedbackRepository;
 import com.google.cloud.storage.BlobInfo;
@@ -17,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +29,15 @@ public class FeedbackService {
     private final MentoService mentoService;
     private final DrawingService drawingService;
     private final GcsService gcsService;
+
+    public Feedback findById(Long feedbackId) {
+        return feedbackRepository.findById(feedbackId).orElseThrow(()-> new NotFoundException("해당 id를 가진 피드백 없음"));
+    }
+
+    @Transactional
+    public Long saveFeedback(Feedback feedback) {
+        return feedbackRepository.save(feedback).getId();
+    }
 
     // 피드백 전체 조회
     public List<SimpleFeedbackDto> readAllFeedback() {
@@ -84,6 +91,6 @@ public class FeedbackService {
                 feedbackReqeustDto.getPrice(), feedbackReqeustDto.getFeedback_file_type(),
                 uuid.toString(), file.getOriginalFilename(), LocalDate.now());
 
-        return feedbackRepository.save(feedback).getId();
+        return saveFeedback(feedback);
     }
 }

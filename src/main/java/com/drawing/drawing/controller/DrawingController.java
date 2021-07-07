@@ -12,6 +12,7 @@ import com.drawing.drawing.entity.Mentee;
 import com.drawing.drawing.entity.User;
 import com.drawing.drawing.exception.UnauthorizedException;
 import com.drawing.drawing.service.DrawingService;
+import com.drawing.drawing.service.FeedbackService;
 import com.drawing.drawing.service.MenteeService;
 import com.drawing.drawing.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,7 @@ public class DrawingController {
 
     private final DrawingService drawingService;
     private final UserService userService;
+    private final FeedbackService feedbackService;
     private final MenteeService menteeService;
 
     /**
@@ -103,4 +105,26 @@ public class DrawingController {
         Message message = new Message(StatusCode.OK, ResponseMessage.READ_DRAWING, response);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+
+    /**
+     * 피드백 요청 접수 ( FeedbackStatus requested -> accepted로 변경, Feedback 생성 )
+     * METHOD : POST
+     * URI : /api/drawing/{drawingId}/status
+     * 권한 : 로그인, 전문가
+     */
+    @PostMapping("/{drawingId}/status")
+    private ResponseEntity<Message> updateDrawingStatus(@PathVariable("drawingId") Long drawingId) {
+
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+
+        if(!userService.isMento()) throw new UnauthorizedException(": user type does not match");
+
+        drawingService.updateDrawingStatus(user.getName(), drawingId);
+
+        Message message = new Message(StatusCode.OK, ResponseMessage.UPDATE_DRAWING_STATUS_ACCEPTED);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+
+
 }

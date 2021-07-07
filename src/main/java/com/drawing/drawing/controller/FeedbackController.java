@@ -67,18 +67,19 @@ public class FeedbackController {
     /**
      * 피드백 생성
      * METHOD : POST
-     * URI : /api/feedback
+     * URI : /api/feedback/{feedbackId}
      * 권한 : 로그인, 전문가
      */
-    @PostMapping(consumes = {"multipart/form-data"})
-    private ResponseEntity<Message> createFeedback(@RequestPart("properties") FeedbackReqeustDto feedbackReqeustDto,
+    @PostMapping(value = "/{feedbackId}", consumes = {"multipart/form-data"})
+    private ResponseEntity<Message> createFeedback(@PathVariable("feedbackId") Long feedbackId,
+                                                   @RequestPart("properties") FeedbackReqeustDto feedbackReqeustDto,
                                                    @RequestPart("file") MultipartFile file ) throws Exception {
 
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
         if(!userService.isMento()) throw new UnauthorizedException(": user type does not match");
 
-        Long id = feedbackService.createFeedback(file, user.getName(), feedbackReqeustDto);
+        Long id = feedbackService.createFeedback(file, user.getName(), feedbackId, feedbackReqeustDto);
 
         Message message = new Message(StatusCode.OK, ResponseMessage.CREATE_FEEDBACK, id);
         return new ResponseEntity<>(message, HttpStatus.OK);

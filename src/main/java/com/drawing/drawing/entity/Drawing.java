@@ -61,4 +61,11 @@ public class Drawing {
         this.endDate = endDate;
     }
 
+    public void ChangeDrawingStatus(DrawingStatus drawingStatus){
+        this.drawingStatus = drawingStatus;
+    }
+
+    public void setFeedback(Feedback feedback) {
+        this.feedback = feedback;
+    }
 }

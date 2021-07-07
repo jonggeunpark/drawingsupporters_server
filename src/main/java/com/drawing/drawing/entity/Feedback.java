@@ -30,13 +30,20 @@ public class Feedback {
     private String feedbackFileType;
     private String uuid;
     private String filename;
+    private FeedbackStatus feedbackStatus;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDate registDate;
+    private LocalDate acceptDate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDate completeDate;
+
+
+    /*
     //== 빌더 ==//
     @Builder
-    public Feedback (Drawing drawing, Mento mento, String title, String description, int price, String feedbackFileType, String uuid, String filename, LocalDate registDate) {
+    public Feedback (Drawing drawing, Mento mento, String title, String description, int price, String feedbackFileType,
+                     String uuid, String filename, LocalDate acceptDate, LocalDate completeDate) {
         this.drawing = drawing;
 
         this.mento = mento;
@@ -48,7 +55,10 @@ public class Feedback {
         this.feedbackFileType = feedbackFileType;
         this.uuid = uuid;
         this.filename = filename;
-        this.registDate = registDate;
+        this.acceptDate = acceptDate;
+        this.completeDate = completeDate;
+    }
+     */
 
     //== 빌더 ==//
     @Builder
