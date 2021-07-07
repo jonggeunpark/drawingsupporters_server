@@ -2,6 +2,7 @@ package com.drawing.drawing.service;
 
 import com.drawing.drawing.dto.Mentee.*;
 import com.drawing.drawing.dto.User.LoginRequestDto;
+import com.drawing.drawing.entity.Feedback;
 import com.drawing.drawing.entity.Mentee;
 import com.drawing.drawing.exception.EmailDuplicateException;
 import com.drawing.drawing.exception.InvalidPasswordException;
@@ -40,9 +41,14 @@ public class MenteeService {
         return menteeRepository.findOneByEmail(email).orElseThrow(()-> new NotFoundException("해당 이메일을 가진 유저가 없습니다."));
     }
 
+    @Transactional
+    public Long saveMentee(Mentee mentee) {
+        return menteeRepository.save(mentee).getId();
+    }
+
     // 회원가입
     @Transactional
-    public Mentee signup(MenteeSignupRequestDto menteeSignupRequestDto) {
+    public void signup(MenteeSignupRequestDto menteeSignupRequestDto) {
 
         // 이메일 중복
         if (userRepository.findOneWithAuthoritiesByEmail(menteeSignupRequestDto.getEmail()).orElse(null) != null) {
@@ -55,7 +61,8 @@ public class MenteeService {
         }
 
         menteeSignupRequestDto.setPassword(passwordEncoder.encode(menteeSignupRequestDto.getPassword()));
-        return menteeRepository.save(menteeSignupRequestDto.toEntity());
+
+        saveMentee(menteeSignupRequestDto.toEntity());
     }
 
     // 로그인

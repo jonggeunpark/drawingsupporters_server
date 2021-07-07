@@ -36,10 +36,14 @@ public class FeedbackService {
     public List<SimpleFeedbackDto> readAllFeedback() {
         List<Feedback> feedbackList = feedbackRepository.findAll();
 
+
+
         List<SimpleFeedbackDto> feedbackDtoList = new ArrayList<>();
 
         for(Feedback feedback: feedbackList) {
-            feedbackDtoList.add(SimpleFeedbackDto.of(feedback));
+            if(feedback.getFeedbackStatus() == FeedbackStatus.COMPLETED){
+                feedbackDtoList.add(SimpleFeedbackDto.of(feedback));
+            }
         }
 
         return feedbackDtoList;
@@ -61,10 +65,14 @@ public class FeedbackService {
 
     // 피드백 생성
     @Transactional
-    public Long createFeedback(MultipartFile file, String email, FeedbackReqeustDto feedbackReqeustDto) throws IOException {
+    public Long createFeedback(MultipartFile file, String email, Long feedbackId, FeedbackReqeustDto feedbackReqeustDto) throws IOException {
 
         Mento mento = mentoService.findOneByEmail(email);
-        Drawing drawing = drawingService.findById(feedbackReqeustDto.getDrawing_id());
+        Feedback feedback = findById(feedbackId);
+
+        if(feedback.getMento() != mento) {
+            throw new NotFoundException("id가 유효하지 않음");
+        }
 
         // 파일명 앞에 랜덤 값 부여
         UUID uuid = UUID.randomUUID();
@@ -72,8 +80,9 @@ public class FeedbackService {
         // 파일 업로드
         BlobInfo blobInfo = gcsService.uploadFileToGCS(uuid, file);
 
-        // DB에 정보 저장
-        Feedback feedback = feedbackReqeustDto.toEntity(mento, drawing, uuid.toString(), file.getOriginalFilename());
+        feedback.completeFeedback(feedbackReqeustDto.getTitle(), feedbackReqeustDto.getDescription(),
+                feedbackReqeustDto.getPrice(), feedbackReqeustDto.getFeedback_file_type(),
+                uuid.toString(), file.getOriginalFilename(), LocalDate.now());
 
         return feedbackRepository.save(feedback).getId();
     }

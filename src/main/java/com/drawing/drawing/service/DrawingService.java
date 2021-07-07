@@ -81,4 +81,27 @@ public class DrawingService {
         return DetailDrawingDto.of(drawing);
     }
 
+    // 피드백 요청 접수 ( FeedbackStatus requested -> accepted로 변경, Feedback 생성 )
+    @Transactional
+    public void updateDrawingStatus(String email, Long drawingId) {
+
+        Mento mento = mentoService.findOneByEmail(email);
+        Drawing drawing = findById(drawingId);
+
+        // 이미 접수되었을 경우
+        if(drawing.getFeedback() != null) {
+            throw new UnauthorizedException("이미 접수된 피드백 요청입니다.");
+        }
+
+        drawing.ChangeDrawingStatus(DrawingStatus.ACCEPTED);
+
+        Feedback feedback = Feedback.builder()
+                .drawing(drawing)
+                .mento(mento)
+                .acceptDate(LocalDate.now())
+                .build();
+
+        saveDrawing(drawing);
+        feedbackRepository.save(feedback);
+    }
 }
