@@ -73,7 +73,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/hello").permitAll()
                 .antMatchers("/api/authenticate").permitAll()
                 .antMatchers("/api/signup").permitAll()
                 .antMatchers("/api/mentee/signup").permitAll() // 멘티 회원가입
@@ -82,10 +81,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/check-email").permitAll() // 이메일 중복 확인
                 .antMatchers("/api/user/check-nickname").permitAll() // 닉네임 중복 확인
                 .antMatchers("/api/feedback").permitAll() // 피드백 전체 조회
-
-
-
+                .antMatchers("/actuator/**").permitAll()
+                .antMatchers("/assets/**").permitAll()
                 .anyRequest().authenticated()
+
 
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));
