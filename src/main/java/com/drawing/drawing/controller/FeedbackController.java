@@ -7,8 +7,10 @@ import com.drawing.drawing.dto.Drawing.DrawingRequestDto;
 import com.drawing.drawing.dto.Feedback.DetailFeedbackDto;
 import com.drawing.drawing.dto.Feedback.FeedbackReqeustDto;
 import com.drawing.drawing.dto.Feedback.SimpleFeedbackDto;
+import com.drawing.drawing.entity.Feedback;
 import com.drawing.drawing.exception.UnauthorizedException;
 import com.drawing.drawing.service.FeedbackService;
+import com.drawing.drawing.service.MailService;
 import com.drawing.drawing.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +37,7 @@ public class FeedbackController {
 
     private final UserService userService;
     private final FeedbackService feedbackService;
+    private final MailService mailService;
 
     /**
      * 피드백 전체 조회
@@ -82,7 +85,12 @@ public class FeedbackController {
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
         if(!userService.isMento()) throw new UnauthorizedException(": user type does not match");
 
+        // 피드백 생성
         Long id = feedbackService.createFeedback(file, user.getName(), feedbackId, feedbackReqeustDto);
+
+        // 메일 전송
+        Feedback feedback = feedbackService.findById(feedbackId);
+        mailService.sendMail(feedback.getDrawing().getMentee().getEmail(), "피드백이 등록되었습니다.", "피드백이 등록되었습니다");
 
         Message message = new Message(StatusCode.OK, ResponseMessage.CREATE_FEEDBACK, id);
         return new ResponseEntity<>(message, HttpStatus.OK);
