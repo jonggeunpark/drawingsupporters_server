@@ -28,10 +28,10 @@ public class MailService {
         Drawing drawing = feedback.getDrawing();
 
         String title = "피드백이 등록되었습니다";
-        String content = "피드백이 등록되었습니다.\\" +
-                "요청 이메일 : " + drawing.getMentee().getEmail() + "\\" +
-                "요청 id : " + drawing.getId() + "\\" +
-                "요청 내용 : " + drawing.getDescription() + "\\" +
+        String content = "피드백이 등록되었습니다.\n" +
+                "요청 이메일 : " + drawing.getMentee().getEmail() + "\n" +
+                "요청 id : " + drawing.getId() + "\n" +
+                "요청 내용 : " + drawing.getDescription() + "\n" +
                 "요청 파일 링크 : " + storage + "/" + drawing.getUuid() + drawing.getFilename();
 
         SimpleMailMessage message = new SimpleMailMessage();
