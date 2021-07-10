@@ -90,7 +90,7 @@ public class FeedbackController {
 
         // 메일 전송
         Feedback feedback = feedbackService.findById(feedbackId);
-        mailService.sendMail(feedback.getDrawing().getMentee().getEmail(), "피드백이 등록되었습니다.", "피드백이 등록되었습니다");
+        mailService.sendMail(feedback);
 
         Message message = new Message(StatusCode.OK, ResponseMessage.CREATE_FEEDBACK, id);
         return new ResponseEntity<>(message, HttpStatus.OK);
