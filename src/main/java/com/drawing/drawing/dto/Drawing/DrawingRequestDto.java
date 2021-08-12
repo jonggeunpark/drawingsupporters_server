@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.List;
 
 @Getter
@@ -20,7 +21,7 @@ public class DrawingRequestDto {
     private String phone_number;
 
 
-    public Drawing toEntity(Mentee mentee, String uuid, String filename) {
+    public Drawing toEntity(Mentee mentee) {
 
         LocalDate dateTime = LocalDate.parse(end_time, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
@@ -32,11 +33,10 @@ public class DrawingRequestDto {
                 .endDate(dateTime)
                 .priceLowerLimit(price_lower_limit)
                 .priceUpperLimit(price_upper_limit)
-                .uuid(uuid)
-                .filename(filename)
                 .phoneNumber(phone_number)
                 .registDate(LocalDate.now())
                 .drawingStatus(DrawingStatus.REQUESTED)
+                .drawingFileSet(new HashSet<>())
                 .build();
     }
 }

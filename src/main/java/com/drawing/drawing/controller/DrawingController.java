@@ -51,13 +51,13 @@ public class DrawingController {
     @ResponseBody
     public ResponseEntity<Message> createDrawing(
             @RequestPart("properties") @Valid DrawingRequestDto drawingRequestDto,
-            @RequestPart("file") @Valid @NotNull @NotBlank MultipartFile file) throws IOException {
+            @RequestPart(value = "file") @Valid @NotNull @NotBlank List<MultipartFile> files) throws IOException {
 
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
         if(!userService.isMentee()) throw new UnauthorizedException(": user type does not match");
 
-        Long id = drawingService.createDrawing(file, user.getName(), drawingRequestDto);
+        Long id = drawingService.createDrawing(files, user.getName(), drawingRequestDto);
 
         Message message = new Message(StatusCode.OK, ResponseMessage.CREATE_DRAWING, id);
         return new ResponseEntity<>(message, HttpStatus.OK);

@@ -23,9 +23,9 @@ public class DetailDrawingDto {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate regist_date;
 
-    private URL download_url;
+    private List<URL> download_url;
 
-    public static DetailDrawingDto of(Drawing drawing, URL download_url) {
+    public static DetailDrawingDto of(Drawing drawing, List<URL> download_url) {
         return new DetailDrawingDto(drawing.getTitle(), drawing.getDescription(), drawing.getPriceLowerLimit(),
                 drawing.getPriceUpperLimit(), Arrays.asList(drawing.getFeedbackType().split(",")),
                 drawing.getFeedbackType(), drawing.getRegistDate(), download_url);

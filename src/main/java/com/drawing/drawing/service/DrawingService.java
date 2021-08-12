@@ -45,19 +45,29 @@ public class DrawingService {
 
     // 피드백 요청
     @Transactional
-    public Long createDrawing(MultipartFile file, String email, DrawingRequestDto drawingRequestDto) throws IOException {
+    public Long createDrawing(List<MultipartFile> files, String email, DrawingRequestDto drawingRequestDto) throws IOException {
 
         Mentee mentee = menteeService.findOneByEmail(email);
 
-        // 파일명 앞에 랜덤 값 부여
-        UUID uuid = UUID.randomUUID();
+        // Drawing 생성
+        Drawing drawing = drawingRequestDto.toEntity(mentee);
 
-        // 파일 업로드
-        BlobInfo blobInfo = gcsService.uploadFileToGCS(uuid, file);
+        for(MultipartFile file: files) {
+            // 파일명 앞에 랜덤 값 부여
+            UUID uuid = UUID.randomUUID();
 
-        // DB에 정보 저장
-        Drawing drawing = drawingRequestDto.toEntity(mentee, uuid.toString(), file.getOriginalFilename());
+            // 파일 업로드
+            BlobInfo blobInfo = gcsService.uploadFileToGCS(uuid, file);
 
+            // drawingFile 생성
+            DrawingFile drawingFile = DrawingFile.builder()
+                    .drawing(drawing)
+                    .uuid(uuid.toString())
+                    .filename(file.getOriginalFilename())
+                    .build();
+        }
+
+        // 저장
         return saveDrawing(drawing);
     }
 
@@ -85,8 +95,13 @@ public class DrawingService {
             throw new NotFoundException("id가 유효하지 않음");
         }
 
-        URL url = gcsService.generateV4GetObjectSignedUrl(drawing.getUuid() + drawing.getFilename());
-        return DetailDrawingDto.of(drawing, url);
+        List<URL> urlList = new ArrayList<>();
+        for (DrawingFile drawingFile : drawing.getDrawingFileSet()) {
+            URL url = gcsService.generateV4GetObjectSignedUrl(drawingFile.getUuid() + drawingFile.getFilename());
+            urlList.add(url);
+        }
+
+        return DetailDrawingDto.of(drawing, urlList);
     }
 
     // 피드백 요청 상세 조회 - 멘토
@@ -94,8 +109,13 @@ public class DrawingService {
 
         Drawing drawing = findById(drawingId);
 
-        URL url = gcsService.generateV4GetObjectSignedUrl(drawing.getUuid() + drawing.getFilename());
-        return DetailDrawingDto.of(drawing, url);
+        List<URL> urlList = new ArrayList<>();
+        for (DrawingFile drawingFile : drawing.getDrawingFileSet()) {
+            URL url = gcsService.generateV4GetObjectSignedUrl(drawingFile.getUuid() + drawingFile.getFilename());
+            urlList.add(url);
+        }
+
+        return DetailDrawingDto.of(drawing, urlList);
     }
 
 
