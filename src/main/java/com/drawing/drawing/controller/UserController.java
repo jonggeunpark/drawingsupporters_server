@@ -135,7 +135,7 @@ public class UserController {
 
         UserInfoResponseDto response = userService.getUserInfo(user.getName());
 
-        Message message = new Message(StatusCode.OK, ResponseMessage.READ_USER_INFO_SUCCESS, userService.getNickname(user.getName()));
+        Message message = new Message(StatusCode.OK, ResponseMessage.READ_USER_INFO_SUCCESS, response);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }
