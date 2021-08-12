@@ -154,4 +154,18 @@ public class DrawingService {
 
         return drawingDtoList;
     }
+
+    @Transactional
+    public void deleteDrawing(String email, Long drawingId) {
+
+        Mentee mentee = menteeService.findOneByEmail(email);
+
+        Drawing drawing = drawingRepository.findById(drawingId).orElseThrow(() -> new NotFoundException("해당 id를 가진 피드백 요청 없음"));
+
+        if(drawing.getMentee() != mentee) {
+            throw new NotFoundException("id가 유효하지 않음");
+        }
+
+        drawingRepository.deleteById(drawingId);
+    }
 }

@@ -167,4 +167,25 @@ public class DrawingController {
         Message message = new Message(StatusCode.OK, ResponseMessage.READ_ACCEPTED_DRAWING, response);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+
+
+    /**
+     * 피드백 요청 삭제
+     * METHOD : DELETE
+     * URI : /api/drawing/{drawingId}
+     * 권한 : 로그인, 학생
+     */
+    @DeleteMapping("/{drawingId}")
+    private ResponseEntity<Message> deleteDrawing(@PathVariable("drawingId") Long drawingId) {
+
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+
+        if(!userService.isMentee()) throw new UnauthorizedException(": user type does not match");
+
+        drawingService.deleteDrawing(user.getName(), drawingId);
+
+        Message message = new Message(StatusCode.OK, ResponseMessage.DELETE_DRAWING);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+
+    }
 }
