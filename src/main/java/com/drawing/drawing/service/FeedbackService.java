@@ -59,8 +59,14 @@ public class FeedbackService {
 
         Feedback feedback = feedbackRepository.findById(id).orElseThrow(() -> new NotFoundException("해당 id를 가진 피드백 없음"));
 
-        URL downloadURL = gcsService.generateV4GetObjectSignedUrl(feedback.getUuid()+feedback.getFilename());
-        return DetailFeedbackDto.of(feedback, downloadURL);
+        List<URL> urlList = new ArrayList<>();
+        for(FeedbackFile feedbackFile: feedback.getFeedbackFileSet()) {
+
+            URL downloadURL = gcsService.generateV4GetObjectSignedUrl(feedbackFile.getUuid() + feedbackFile.getFilename());
+            urlList.add(downloadURL);
+        }
+
+        return DetailFeedbackDto.of(feedback, urlList);
     }
 
     // 피드백 생성
@@ -80,9 +86,14 @@ public class FeedbackService {
         // 파일 업로드
         BlobInfo blobInfo = gcsService.uploadFileToGCS(uuid, file);
 
+        FeedbackFile feedbackFile = FeedbackFile.builder()
+                .feedback(feedback)
+                .filename(file.getOriginalFilename())
+                .uuid(uuid.toString())
+                .build();
+
         feedback.completeFeedback(feedbackReqeustDto.getTitle(), feedbackReqeustDto.getDescription(),
-                feedbackReqeustDto.getPrice(), feedbackReqeustDto.getFeedback_file_type(),
-                uuid.toString(), file.getOriginalFilename(), LocalDate.now());
+                feedbackReqeustDto.getPrice(), feedbackReqeustDto.getFeedback_file_type(), LocalDate.now());
 
         return saveFeedback(feedback);
     }

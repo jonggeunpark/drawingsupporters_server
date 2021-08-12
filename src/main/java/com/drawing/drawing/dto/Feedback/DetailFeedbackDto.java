@@ -25,13 +25,13 @@ public class DetailFeedbackDto {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate end_time;
 
-    private URL download_url;
+    private List<URL> download_url_list;
 
-    public static DetailFeedbackDto of(Feedback feedback, URL download_link) {
+    public static DetailFeedbackDto of(Feedback feedback, List<URL> downloadlinkLst) {
         Drawing drawing = feedback.getDrawing();
         return new DetailFeedbackDto(feedback.getTitle(), feedback.getDescription(), drawing.getPriceLowerLimit(),
                 drawing.getPriceUpperLimit(), Arrays.asList(drawing.getFeedbackType().split(",")),
-                feedback.getDrawing().getFeedbackType(), feedback.getCompleteDate(), download_link);
+                feedback.getDrawing().getFeedbackType(), feedback.getCompleteDate(), downloadlinkLst);
     }
 
 }
