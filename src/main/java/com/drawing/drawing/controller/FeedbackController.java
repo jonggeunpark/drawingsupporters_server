@@ -72,7 +72,7 @@ public class FeedbackController {
     }
 
     /**
-     * 피드백 생성
+     * 피드백 생성t
      * METHOD : POST
      * URI : /api/feedback/{feedbackId}
      * 권한 : 로그인, 전문가
