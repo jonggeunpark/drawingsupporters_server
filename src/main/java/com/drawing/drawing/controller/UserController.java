@@ -6,7 +6,6 @@ import com.drawing.drawing.constants.ResponseMessage;
 import com.drawing.drawing.constants.StatusCode;
 import com.drawing.drawing.dto.User.*;
 import com.drawing.drawing.exception.InvalidPasswordException;
-import com.drawing.drawing.exception.NotFoundException;
 import com.drawing.drawing.jwt.JwtFilter;
 import com.drawing.drawing.jwt.TokenProvider;
 import com.drawing.drawing.service.UserService;
@@ -125,14 +124,16 @@ public class UserController {
     }
 
     /**
-     * 닉네임 중복 확인
+     * 유저 정보 확인 (닉네임, 유저 종류)
      * METHOD : GET
      * URI : /api/user/info
      * 권한 : 로그인
      */
     @GetMapping("/info")
-    public ResponseEntity<Message> getNickname() {
+    public ResponseEntity<Message> getUserInfo() {
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
+
+        UserInfoResponseDto response = userService.getUserInfo(user.getName());
 
         Message message = new Message(StatusCode.OK, ResponseMessage.READ_USER_INFO_SUCCESS, userService.getNickname(user.getName()));
         return new ResponseEntity<>(message, HttpStatus.OK);

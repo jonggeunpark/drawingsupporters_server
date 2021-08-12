@@ -3,6 +3,7 @@ package com.drawing.drawing.service;
 import com.drawing.drawing.dto.User.DuplicateResponseDto;
 import com.drawing.drawing.dto.User.EmailDto;
 import com.drawing.drawing.dto.User.NicknameDto;
+import com.drawing.drawing.dto.User.UserInfoResponseDto;
 import com.drawing.drawing.entity.User;
 import com.drawing.drawing.exception.NotFoundException;
 import com.drawing.drawing.repository.UserRepository;
@@ -45,7 +46,19 @@ public class UserService {
     }
 
     // 유저 정보 확인
-    public String getNickname(String email) {
-        return findOneByEmail(email).getNickname();
+    public UserInfoResponseDto getUserInfo(String email) {
+
+        User user = findOneByEmail(email);
+        String nickname = user.getEmail();
+
+        String userType = "";
+
+        if(isMentee()) {
+            userType = "mentee";
+        } else if (isMento()) {
+            userType = "mento";
+        }
+        
+        return UserInfoResponseDto.of(nickname, userType);
     }
 }
