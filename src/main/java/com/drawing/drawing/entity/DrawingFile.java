@@ -15,7 +15,7 @@ import java.util.Set;
 public class DrawingFile {
 
     @Id @GeneratedValue
-    @Column(name = "file_id")
+    @Column(name = "drawingFile_id")
     private Long id;
 
     @ManyToOne
