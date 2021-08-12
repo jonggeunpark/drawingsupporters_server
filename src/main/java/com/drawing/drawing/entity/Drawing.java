@@ -5,6 +5,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -22,11 +24,12 @@ public class Drawing {
     @OneToOne(mappedBy = "drawing")
     private Feedback feedback;
 
+    @OneToMany(mappedBy = "drawing", cascade = CascadeType.ALL)
+    private Set<DrawingFile> drawingFileSet = new HashSet<>();
+
     private String title;
     private String description;
     private String feedbackType;
-    private String uuid;
-    private String filename;
     private int priceUpperLimit;
     private int priceLowerLimit;
     private String phoneNumber;
@@ -41,8 +44,8 @@ public class Drawing {
     //== 빌더 ==//
     @Builder
     public Drawing(Mentee mentee, Feedback feedback, String title, String description, String feedbackType, int priceUpperLimit,
-                   int priceLowerLimit, String phoneNumber, LocalDate registDate, String uuid, String filename,
-                   LocalDate endDate, DrawingStatus drawingStatus) {
+                   int priceLowerLimit, String phoneNumber, LocalDate registDate, LocalDate endDate,
+                   Set<DrawingFile> drawingFileSet, DrawingStatus drawingStatus) {
 
         this.mentee = mentee;
         mentee.getDrawingSet().add(this);
@@ -54,11 +57,10 @@ public class Drawing {
         this.feedbackType = feedbackType;
         this.priceLowerLimit = priceLowerLimit;
         this.priceUpperLimit = priceUpperLimit;
-        this.uuid = uuid;
-        this.filename = filename;
         this.phoneNumber = phoneNumber;
         this.registDate = registDate;
         this.endDate = endDate;
+        this.drawingFileSet = drawingFileSet;
     }
 
     public void changeDrawingStatus(DrawingStatus drawingStatus){
