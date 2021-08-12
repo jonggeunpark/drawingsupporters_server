@@ -55,15 +55,9 @@ public class FeedbackService {
     }
 
     // 피드백 상세 조회
-    public DetailFeedbackDto readFeedback(String email, Long id) {
-
-        Mentee mentee = menteeService.findOneByEmail(email);
+    public DetailFeedbackDto readFeedback(Long id) {
 
         Feedback feedback = feedbackRepository.findById(id).orElseThrow(() -> new NotFoundException("해당 id를 가진 피드백 없음"));
-
-        if(feedback.getDrawing().getMentee() != mentee) {
-            throw new NotFoundException("id가 유효하지 않음");
-        }
 
         URL downloadURL = gcsService.generateV4GetObjectSignedUrl(feedback.getUuid()+feedback.getFilename());
         return DetailFeedbackDto.of(feedback, downloadURL);

@@ -58,21 +58,19 @@ public class FeedbackController {
      * 피드백 상세 조회
      * METHOD : GET
      * URI : /api/feedback/{feedbackId}
-     * 권한 : 로그인
+     * 권한 : 없음
      */
     @GetMapping("/{feedbackId}")
     private ResponseEntity<Message> readFeedback(@PathVariable("feedbackId") Long feedbackId) {
 
-        Authentication user = SecurityContextHolder.getContext().getAuthentication();
-
-        DetailFeedbackDto response = feedbackService.readFeedback(user.getName(), feedbackId);
+        DetailFeedbackDto response = feedbackService.readFeedback(feedbackId);
 
         Message message = new Message(StatusCode.OK, ResponseMessage.READ_FEEDBACK, response);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     /**
-     * 피드백 생성t
+     * 피드백 생성
      * METHOD : POST
      * URI : /api/feedback/{feedbackId}
      * 권한 : 로그인, 전문가
