@@ -49,7 +49,7 @@ public class UserService {
     public UserInfoResponseDto getUserInfo(String email) {
 
         User user = findOneByEmail(email);
-        String nickname = user.getEmail();
+        String nickname = user.getNickname();
 
         String userType = "";
 
