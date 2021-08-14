@@ -55,7 +55,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf().disable()
-
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
 
                 .exceptionHandling()
@@ -82,10 +81,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/check-nickname").permitAll() // 닉네임 중복 확인
                 .antMatchers("/api/feedback").permitAll() // 피드백 전체 조회
                 .antMatchers("/api/feedback/{feedback_id}").permitAll() // 피드백 상세 조회
-                .antMatchers("/actuator/**").permitAll()
-                .antMatchers("/assets/**").permitAll()
                 .anyRequest().authenticated()
 
+
+                .and()
+                .cors()
 
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));
