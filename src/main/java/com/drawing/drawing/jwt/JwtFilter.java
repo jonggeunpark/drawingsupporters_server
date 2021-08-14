@@ -41,7 +41,7 @@ public class JwtFilter extends GenericFilterBean {
         } else {
             logger.debug("유효한 JWT 토큰이 없습니다, uri: {}", requestURI);
         }
-
+        /*
         if (servletResponse instanceof HttpServletResponse){
             HttpServletResponse response = (HttpServletResponse)servletResponse;
             HttpServletRequest request = (HttpServletRequest) servletRequest;
@@ -54,6 +54,8 @@ public class JwtFilter extends GenericFilterBean {
             response.setHeader("Access-Control-Allow-Headers", "*");
             filterChain.doFilter(request, response);
         }
+        */
+
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
