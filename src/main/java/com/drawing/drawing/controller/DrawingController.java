@@ -48,6 +48,7 @@ public class DrawingController {
      * 권한 : 로그인, 학생
      * file과 json을 동시에 받음
      */
+    @CrossOrigin
     @PostMapping(consumes = {"multipart/form-data"})
     @ResponseBody
     public ResponseEntity<Message> createDrawing(
@@ -71,6 +72,7 @@ public class DrawingController {
      * URI : /api/drawing
      * 권한 : 로그인, 학생
      */
+    @CrossOrigin
     @GetMapping()
     public ResponseEntity<Message> readAllDrawing() {
 
@@ -92,6 +94,7 @@ public class DrawingController {
      * 학생일 경우 : 해당 drawing이 학생의 drawing 이어야함
      * 전문가일 경우 : 조건 없음
      */
+    @CrossOrigin
     @GetMapping("/{drawingId}")
     private ResponseEntity<Message> readDrawing(@PathVariable("drawingId") Long drawingId) {
 
@@ -118,6 +121,7 @@ public class DrawingController {
      * URI : /api/drawing/{drawingId}/status
      * 권한 : 로그인, 전문가
      */
+    @CrossOrigin
     @PostMapping("/{drawingId}/status")
     private ResponseEntity<Message> updateDrawingStatus(@PathVariable("drawingId") Long drawingId) {
 
@@ -137,6 +141,7 @@ public class DrawingController {
      * URI : /api/drawing/requested
      * 권한 : 로그인, 전문가
      */
+    @CrossOrigin
     @GetMapping("/requested")
     private ResponseEntity<Message> readRequestedDrawing() {
 
@@ -157,6 +162,7 @@ public class DrawingController {
      * URI : /api/drawing/accepted
      * 권한 : 로그인, 전문가
      */
+    @CrossOrigin
     @GetMapping("/accepted")
     private ResponseEntity<Message> readAcceptedFeedback() {
 
@@ -176,6 +182,7 @@ public class DrawingController {
      * URI : /api/drawing/{drawingId}
      * 권한 : 로그인, 학생
      */
+    @CrossOrigin
     @DeleteMapping("/{drawingId}")
     private ResponseEntity<Message> deleteDrawing(@PathVariable("drawingId") Long drawingId) {
 
