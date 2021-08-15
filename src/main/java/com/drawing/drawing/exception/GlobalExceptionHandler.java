@@ -3,12 +3,15 @@ package com.drawing.drawing.exception;
 import com.drawing.drawing.constants.Message;
 import com.drawing.drawing.constants.ResponseMessage;
 import com.drawing.drawing.constants.StatusCode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.multipart.MultipartException;
 
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
@@ -41,4 +44,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
 
+    // 500
+    @ExceptionHandler({ Exception.class })
+    public ResponseEntity<Object> handleAll(final Exception ex) {
+        log.info(ex.getClass().getName());
+        log.error("error", ex);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
