@@ -90,18 +90,21 @@ public class DrawingController {
      * 피드백 요청 상세 조회
      * METHOD : GET
      * URI : /api/drawing/{drawingId}
-     * 권한 : 로그인, 학생 or 전문가
-     * 학생일 경우 : 해당 drawing이 학생의 drawing 이어야함
-     * 전문가일 경우 : 조건 없음
+     * ////권한 : 로그인, 학생 or 전문가
+     * ////학생일 경우 : 해당 drawing이 학생의 drawing 이어야함
+     * ////전문가일 경우 : 조건 없음
+     * 권한 삭제 - 2021-08-15
      */
     @CrossOrigin
     @GetMapping("/{drawingId}")
     private ResponseEntity<Message> readDrawing(@PathVariable("drawingId") Long drawingId) {
 
-        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+
+        //Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
         DetailDrawingDto response = null;
 
+        /*
         // 학생일 경우
         if(userService.isMentee()) {
             response = drawingService.readDrawingByMentee(user.getName(), drawingId);
@@ -110,6 +113,8 @@ public class DrawingController {
         } else {
             throw new UnauthorizedException(": user type does not match");
         }
+         */
+        response = drawingService.readDrawingByMento(drawingId);
 
         Message message = new Message(StatusCode.OK, ResponseMessage.READ_DRAWING, response);
         return new ResponseEntity<>(message, HttpStatus.OK);

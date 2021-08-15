@@ -84,6 +84,7 @@ public class DrawingService {
         return simpleDrawingDtoList;
     }
 
+    /*
     // 피드백 요청 상세 조회 - 멘티
     public DetailDrawingDto readDrawingByMentee(String email, Long id) {
 
@@ -117,7 +118,21 @@ public class DrawingService {
 
         return DetailDrawingDto.of(drawing, urlList);
     }
+     */
 
+    // 피드백 요청 상세 조회 - 권한 X
+    public DetailDrawingDto readDrawingDetail(Long drawingId) {
+
+        Drawing drawing = findById(drawingId);
+
+        List<URL> urlList = new ArrayList<>();
+        for (DrawingFile drawingFile : drawing.getDrawingFileSet()) {
+            URL url = gcsService.generateV4GetObjectSignedUrl(drawingFile.getUuid() + drawingFile.getFilename());
+            urlList.add(url);
+        }
+
+        return DetailDrawingDto.of(drawing, urlList);
+    }
 
     // 피드백 요청 접수 ( FeedbackStatus requested -> accepted로 변경, Feedback 생성 )
     @Transactional
