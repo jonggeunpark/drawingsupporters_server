@@ -70,17 +70,22 @@ public class DrawingController {
      * 피드백 요청 전체 조회
      * METHOD : GET
      * URI : /api/drawing
-     * 권한 : 로그인, 학생
+     * ////권한 : 로그인, 학생
+     * 권한 삭제 - 2021-08-15
      */
     @CrossOrigin
     @GetMapping()
     public ResponseEntity<Message> readAllDrawing() {
 
+        /*
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
         if(!userService.isMentee()) throw new UnauthorizedException(": user type does not match");
 
         List<SimpleDrawingDto> response = drawingService.readAllDrawing(user.getName(), storage);
+         */
+
+        List<SimpleDrawingDto> response = drawingService.readAllDrawing(storage);
 
         Message message = new Message(StatusCode.OK, ResponseMessage.READ_ALL_DRAWING, response);
         return new ResponseEntity<>(message, HttpStatus.OK);

@@ -81,7 +81,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/check-nickname").permitAll() // 닉네임 중복 확인
                 .antMatchers("/api/feedback").permitAll() // 피드백 전체 조회
                 .antMatchers("/api/feedback/{feedback_id}").permitAll() // 피드백 상세 조회
-                .antMatchers("/api/drawing/{drawing_id}").permitAll() // 피드백 상세 조회
+                .antMatchers("/api/drawing").permitAll() // 피드백 요청 전체 조회
+                .antMatchers("/api/drawing/{drawing_id}").permitAll() // 피드백 요청 상세 조회
                 .anyRequest().authenticated()
 
 

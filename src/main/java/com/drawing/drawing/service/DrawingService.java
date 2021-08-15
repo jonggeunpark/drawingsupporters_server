@@ -71,6 +71,7 @@ public class DrawingService {
         return saveDrawing(drawing);
     }
 
+    /*
     // 피드백 요청 전체 조회
     public List<SimpleDrawingDto> readAllDrawing(String email, String storage) {
 
@@ -78,6 +79,19 @@ public class DrawingService {
 
         List<SimpleDrawingDto> simpleDrawingDtoList = new ArrayList<>();
         for(Drawing drawing : mentee.getDrawingSet()) {
+            simpleDrawingDtoList.add(SimpleDrawingDto.of(drawing, storage));
+        }
+
+        return simpleDrawingDtoList;
+    }
+
+     */
+    public List<SimpleDrawingDto> readAllDrawing(String storage) {
+
+        List<Drawing> drawingList = drawingRepository.findAll();
+
+        List<SimpleDrawingDto> simpleDrawingDtoList = new ArrayList<>();
+        for(Drawing drawing : drawingList) {
             simpleDrawingDtoList.add(SimpleDrawingDto.of(drawing, storage));
         }
 
