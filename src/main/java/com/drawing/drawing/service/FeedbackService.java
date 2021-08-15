@@ -26,7 +26,7 @@ public class FeedbackService {
 
     private final FeedbackRepository feedbackRepository;
     private final MenteeService menteeService;
-    private final MentoService mentoService;
+    private final MentorService mentorService;
     private final DrawingService drawingService;
     private final GcsService gcsService;
 
@@ -73,10 +73,10 @@ public class FeedbackService {
     @Transactional
     public Long createFeedback(MultipartFile file, String email, Long feedbackId, FeedbackReqeustDto feedbackReqeustDto) throws IOException {
 
-        Mento mento = mentoService.findOneByEmail(email);
+        Mentor mentor = mentorService.findOneByEmail(email);
         Feedback feedback = findById(feedbackId);
 
-        if(feedback.getMento() != mento) {
+        if(feedback.getMentor() != mentor) {
             throw new NotFoundException("id가 유효하지 않음");
         }
 
@@ -100,10 +100,10 @@ public class FeedbackService {
 
     // 완료 상태 피드백 목록 조회
     public List<SimpleFeedbackDto> readCompletedFeedback(String email, String storage) {
-        Mento mento = mentoService.findOneByEmail(email);
+        Mentor mentor = mentorService.findOneByEmail(email);
         List<SimpleFeedbackDto> feedbackDtoList = new ArrayList<>();
 
-        for(Feedback feedback: mento.getFeedbackSet()) {
+        for(Feedback feedback: mentor.getFeedbackSet()) {
             if(feedback.getStatus() == FeedbackStatus.COMPLETED){
                 feedbackDtoList.add(SimpleFeedbackDto.of(feedback, storage));
             }

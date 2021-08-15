@@ -24,7 +24,7 @@ public class Feedback {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private Mento mento;
+    private Mentor mentor;
 
     private String title;
     private String description;
@@ -43,11 +43,11 @@ public class Feedback {
 
     //== 빌더 ==//
     @Builder
-    public Feedback (Drawing drawing, Mento mento, LocalDate acceptDate, Set<FeedbackFile> feedbackFileSet) {
+    public Feedback (Drawing drawing, Mentor mentor, LocalDate acceptDate, Set<FeedbackFile> feedbackFileSet) {
         this.drawing = drawing;
         drawing.setFeedback(this);
-        this.mento = mento;
-        mento.getFeedbackSet().add(this);
+        this.mentor = mentor;
+        mentor.getFeedbackSet().add(this);
         this.acceptDate = acceptDate;
         this.status = FeedbackStatus.ACCEPTED;
         this.feedbackFileSet = feedbackFileSet;

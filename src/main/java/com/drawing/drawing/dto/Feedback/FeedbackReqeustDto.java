@@ -1,11 +1,6 @@
 package com.drawing.drawing.dto.Feedback;
 
-import com.drawing.drawing.entity.Drawing;
-import com.drawing.drawing.entity.Feedback;
-import com.drawing.drawing.entity.Mento;
 import lombok.Getter;
-
-import java.time.LocalDate;
 
 
 @Getter
@@ -17,9 +12,9 @@ public class FeedbackReqeustDto {
     private String feedback_file_type;
 
     /*
-    public Feedback toEntity(Mento mento, Drawing drawing, String uuid, String filename) {
+    public Feedback toEntity(Mentor mentor, Drawing drawing, String uuid, String filename) {
         return Feedback.builder()
-                .mento(mento)
+                .mentor(mentor)
                 .drawing(drawing)
                 .title(title)
                 .description(description)

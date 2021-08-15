@@ -15,9 +15,9 @@ import java.util.Set;
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("o")
-public class Mento extends User{
+public class Mentor extends User{
 
-    @OneToMany(mappedBy = "mento", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL)
     private Set<Feedback> feedbackSet = new HashSet<>();
 
     /*

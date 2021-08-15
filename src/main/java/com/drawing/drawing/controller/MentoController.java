@@ -3,38 +3,26 @@ package com.drawing.drawing.controller;
 import com.drawing.drawing.constants.Message;
 import com.drawing.drawing.constants.ResponseMessage;
 import com.drawing.drawing.constants.StatusCode;
-import com.drawing.drawing.dto.Mento.MentoSignupRequestDto;
-import com.drawing.drawing.dto.User.LoginRequestDto;
-import com.drawing.drawing.dto.User.LoginResponseDto;
-import com.drawing.drawing.exception.InvalidPasswordException;
-import com.drawing.drawing.exception.NotFoundException;
-import com.drawing.drawing.jwt.JwtFilter;
+import com.drawing.drawing.dto.Mentor.MentorSignupRequestDto;
 import com.drawing.drawing.jwt.TokenProvider;
-import com.drawing.drawing.service.MentoService;
+import com.drawing.drawing.service.MentorService;
 import com.drawing.drawing.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.LockedException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/mento")
+@RequestMapping("/api/mentor")
 @RequiredArgsConstructor
 public class MentoController {
 
 
-    private final MentoService mentoService;
+    private final MentorService mentorService;
     private final UserService userService;
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -42,13 +30,13 @@ public class MentoController {
     /**
      * 회원가입_멘토
      * METHOD : POST
-     * URI : /api/mento/signup
+     * URI : /api/mentor/signup
      * 권한 : 없음
      */
     @PostMapping("/signup")
-    public ResponseEntity<Message> signup(@Valid @RequestBody MentoSignupRequestDto mentoSignupRequestDto) {
+    public ResponseEntity<Message> signup(@Valid @RequestBody MentorSignupRequestDto mentorSignupRequestDto) {
 
-        mentoService.signup(mentoSignupRequestDto);
+        mentorService.signup(mentorSignupRequestDto);
         Message message = new Message(StatusCode.OK, ResponseMessage.SIGNUP_SUCCESS);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }

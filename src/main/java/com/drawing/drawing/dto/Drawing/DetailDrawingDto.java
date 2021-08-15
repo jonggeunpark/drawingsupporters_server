@@ -25,7 +25,7 @@ public class DetailDrawingDto {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate regist_date;
 
-    private List<String> thumnail_list;
+    private List<String> thumbnail_list;
     //private List<URL> download_url;
 
     public static DetailDrawingDto of(Drawing drawing, String storage) {

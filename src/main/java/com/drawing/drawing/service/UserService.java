@@ -56,7 +56,7 @@ public class UserService {
         if(isMentee()) {
             userType = "mentee";
         } else if (isMento()) {
-            userType = "mento";
+            userType = "mentor";
         }
         
         return UserInfoResponseDto.of(nickname, userType);

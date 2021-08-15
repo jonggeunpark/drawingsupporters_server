@@ -3,7 +3,6 @@ package com.drawing.drawing.service;
 import com.drawing.drawing.dto.Drawing.DetailDrawingDto;
 import com.drawing.drawing.dto.Drawing.DrawingRequestDto;
 import com.drawing.drawing.dto.Drawing.SimpleDrawingDto;
-import com.drawing.drawing.dto.Feedback.SimpleFeedbackDto;
 import com.drawing.drawing.entity.*;
 import com.drawing.drawing.exception.NotFoundException;
 import com.drawing.drawing.exception.UnauthorizedException;
@@ -16,12 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 @Service
 @Transactional(readOnly = true)
@@ -31,7 +28,7 @@ public class DrawingService {
     private final DrawingRepository drawingRepository;
     private final FeedbackRepository feedbackRepository;
     private final MenteeService menteeService;
-    private final MentoService mentoService;
+    private final MentorService mentorService;
     private final GcsService gcsService;
 
     public Drawing findById(Long drawingId) {
@@ -155,7 +152,7 @@ public class DrawingService {
     @Transactional
     public Long updateDrawingStatus(String email, Long drawingId) {
 
-        Mento mento = mentoService.findOneByEmail(email);
+        Mentor mentor = mentorService.findOneByEmail(email);
         Drawing drawing = findById(drawingId);
 
         // 이미 접수되었을 경우
@@ -167,7 +164,7 @@ public class DrawingService {
 
         Feedback feedback = Feedback.builder()
                 .drawing(drawing)
-                .mento(mento)
+                .mentor(mentor)
 
                 .acceptDate(LocalDate.now())
                 .build();
@@ -179,7 +176,7 @@ public class DrawingService {
     // 요청 상태 피드백 요청 목록 조회
     public List<SimpleDrawingDto> readRequestedDrawing(String email, String storage) {
 
-        Mento mento = mentoService.findOneByEmail(email);
+        Mentor mentor = mentorService.findOneByEmail(email);
         List<Drawing> drawingList = drawingRepository.findAll();
 
         List<SimpleDrawingDto> simpleDrawingDtoList = new ArrayList<>();
@@ -194,10 +191,10 @@ public class DrawingService {
 
     // 접수 상태 피드백 목록 조회
     public List<SimpleDrawingDto> readAcceptedDrawing(String email, String storage) {
-        Mento mento = mentoService.findOneByEmail(email);
+        Mentor mentor = mentorService.findOneByEmail(email);
         List<SimpleDrawingDto> drawingDtoList = new ArrayList<>();
 
-        for(Feedback feedback: mento.getFeedbackSet()) {
+        for(Feedback feedback: mentor.getFeedbackSet()) {
             if(feedback.getStatus() == FeedbackStatus.ACCEPTED){
 
                 drawingDtoList.add(SimpleDrawingDto.of(feedback.getDrawing(), storage));

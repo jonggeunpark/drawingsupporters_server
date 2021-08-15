@@ -2,9 +2,7 @@ package com.drawing.drawing.dto.Mentee;
 
 import com.drawing.drawing.entity.Authority;
 import com.drawing.drawing.entity.Mentee;
-import com.drawing.drawing.entity.Mento;
 import lombok.*;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collections;
 import java.util.List;

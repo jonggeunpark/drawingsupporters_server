@@ -75,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/authenticate").permitAll()
                 .antMatchers("/api/signup").permitAll()
                 .antMatchers("/api/mentee/signup").permitAll() // 멘티 회원가입
-                .antMatchers("/api/mento/signup").permitAll() // 멘토 회원가입
+                .antMatchers("/api/mentor/signup").permitAll() // 멘토 회원가입
                 .antMatchers("/api/user/login").permitAll() // 로그인
                 .antMatchers("/api/user/check-email").permitAll() // 이메일 중복 확인
                 .antMatchers("/api/user/check-nickname").permitAll() // 닉네임 중복 확인

@@ -1,33 +1,32 @@
-package com.drawing.drawing.dto.Mento;
+package com.drawing.drawing.dto.Mentor;
 
 import com.drawing.drawing.entity.Authority;
-import com.drawing.drawing.entity.Mento;
+import com.drawing.drawing.entity.Mentor;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Collections;
-import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MentoSignupRequestDto {
+public class MentorSignupRequestDto {
 
     private String email;
     private String password;
     private String nickname;
     private String phone_number;
 
-    public Mento toEntity() {
+    public Mentor toEntity() {
 
         Authority authority = Authority.builder()
                 .authorityName("ROLE_USER")
                 .build();
 
-        return Mento.builder()
+        return Mentor.builder()
                 .email(email)
                 .password(password)
                 .nickname(nickname)

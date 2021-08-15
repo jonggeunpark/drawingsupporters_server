@@ -1,16 +1,15 @@
 package com.drawing.drawing.service;
 
 import com.drawing.drawing.dto.User.LoginRequestDto;
-import com.drawing.drawing.dto.Mento.MentoSignupRequestDto;
-import com.drawing.drawing.entity.Mentee;
-import com.drawing.drawing.entity.Mento;
+import com.drawing.drawing.dto.Mentor.MentorSignupRequestDto;
+import com.drawing.drawing.entity.Mentor;
 import com.drawing.drawing.exception.EmailDuplicateException;
 import com.drawing.drawing.exception.InvalidPasswordException;
 import com.drawing.drawing.exception.NicknameDuplicateException;
 import com.drawing.drawing.exception.NotFoundException;
 import com.drawing.drawing.jwt.JwtFilter;
 import com.drawing.drawing.jwt.TokenProvider;
-import com.drawing.drawing.repository.MentoRepository;
+import com.drawing.drawing.repository.MentorRepository;
 import com.drawing.drawing.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -28,39 +27,39 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 @AllArgsConstructor
-public class MentoService {
+public class MentorService {
 
-    private final MentoRepository mentoRepository;
+    private final MentorRepository mentorRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    public Mento findOneByEmail(String email) {
-        return mentoRepository.findOneByEmail(email).orElseThrow(()-> new NotFoundException("해당 이메일을 가진 유저가 없습니다."));
+    public Mentor findOneByEmail(String email) {
+        return mentorRepository.findOneByEmail(email).orElseThrow(()-> new NotFoundException("해당 이메일을 가진 유저가 없습니다."));
     }
 
     @Transactional
-    public Long saveMento(Mento mento) {
-        return mentoRepository.save(mento).getId();
+    public Long saveMentor(Mentor mentor) {
+        return mentorRepository.save(mentor).getId();
     }
 
     // 회원가입
     @Transactional
-    public void signup(MentoSignupRequestDto mentoSignupRequestDto) {
+    public void signup(MentorSignupRequestDto mentorSignupRequestDto) {
 
         // 이메일 중복
-        if (userRepository.findOneWithAuthoritiesByEmail(mentoSignupRequestDto.getEmail()).orElse(null) != null) {
-            throw new EmailDuplicateException(mentoSignupRequestDto.getEmail());
+        if (userRepository.findOneWithAuthoritiesByEmail(mentorSignupRequestDto.getEmail()).orElse(null) != null) {
+            throw new EmailDuplicateException(mentorSignupRequestDto.getEmail());
         }
 
         // 닉네임 중복
-        if (userRepository.findOneByNickname(mentoSignupRequestDto.getNickname()).orElse(null) != null) {
-            throw new NicknameDuplicateException(mentoSignupRequestDto.getNickname());
+        if (userRepository.findOneByNickname(mentorSignupRequestDto.getNickname()).orElse(null) != null) {
+            throw new NicknameDuplicateException(mentorSignupRequestDto.getNickname());
         }
 
-        mentoSignupRequestDto.setPassword(passwordEncoder.encode(mentoSignupRequestDto.getPassword()));
-        saveMento(mentoSignupRequestDto.toEntity());
+        mentorSignupRequestDto.setPassword(passwordEncoder.encode(mentorSignupRequestDto.getPassword()));
+        saveMentor(mentorSignupRequestDto.toEntity());
     }
 
     // 로그인
