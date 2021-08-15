@@ -30,7 +30,7 @@ public class TokenProvider implements InitializingBean {
     private static final String AUTHORITIES_KEY = "auth";
 
     private final String secret;
-    private final long ACCESS_TOKEN_VALID_TIME = 60 * 60 * 1000L;
+    private final long ACCESS_TOKEN_VALID_TIME = 60 * 60 * 24 * 14 * 1000L;
     private final long REFRESH_TOKEN_VALID_TIME = 60 * 60 * 24 * 14 * 1000L;
 
     private Key key;
