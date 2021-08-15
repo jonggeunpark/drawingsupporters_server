@@ -102,7 +102,7 @@ public class FeedbackService {
     // 접수 상태 피드백 목록 조회
     public List<SimpleFeedbackDto> readAcceptedFeedback(String email, String storage) {
         Mentor mentor = mentorService.findOneByEmail(email);
-        List<Feedback> feedbackList = feedbackRepository.findAllByUserIdAndStatusOrderById(mentor.getId(), FeedbackStatus.ACCEPTED);
+        List<Feedback> feedbackList = feedbackRepository.findAllByMentorAndStatusOrderById(mentor, FeedbackStatus.ACCEPTED);
         List<SimpleFeedbackDto> feedbackDtoList = new ArrayList<>();
 
         for(Feedback feedback: feedbackList) {
@@ -115,7 +115,7 @@ public class FeedbackService {
     // 완료 상태 피드백 목록 조회
     public List<SimpleFeedbackDto> readCompletedFeedback(String email, String storage) {
         Mentor mentor = mentorService.findOneByEmail(email);
-        List<Feedback> feedbackList = feedbackRepository.findAllByUserIdAndStatusOrderById(mentor.getId(), FeedbackStatus.COMPLETED);
+        List<Feedback> feedbackList = feedbackRepository.findAllByMentorAndStatusOrderById(mentor, FeedbackStatus.COMPLETED);
         List<SimpleFeedbackDto> feedbackDtoList = new ArrayList<>();
 
         for(Feedback feedback: feedbackList) {

@@ -179,7 +179,7 @@ public class DrawingService {
 
         Mentor mentor = mentorService.findOneByEmail(email);
 
-        List<Drawing> drawingList = drawingRepository.findAllByStatusOrderById(DrawingStatus.REQUESTED);
+        List<Drawing> drawingList = drawingRepository.findAllByDrawingStatusOrderById(DrawingStatus.REQUESTED);
 
         List<SimpleDrawingDto> simpleDrawingDtoList = new ArrayList<>();
 
