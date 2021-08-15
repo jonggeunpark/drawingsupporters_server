@@ -117,7 +117,7 @@ public class DrawingService {
     }
 
     // 피드백 요청 상세 조회 - 멘토
-    public DetailDrawingDto readDrawingByMento(Long drawingId) {
+    public DetailDrawingDto readDrawingByMentor(Long drawingId) {
 
         Drawing drawing = findById(drawingId);
 

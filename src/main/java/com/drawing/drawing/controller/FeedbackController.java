@@ -82,7 +82,7 @@ public class FeedbackController {
                                                    @RequestPart("file") MultipartFile file ) throws Exception {
 
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
-        if(!userService.isMento()) throw new UnauthorizedException(": user type does not match");
+        if(!userService.isMentor()) throw new UnauthorizedException(": user type does not match");
 
         // 피드백 생성
         Long id = feedbackService.createFeedback(file, user.getName(), feedbackId, feedbackReqeustDto);
@@ -106,7 +106,7 @@ public class FeedbackController {
     private ResponseEntity<Message> readCompletedFeedback() {
 
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
-        if(!userService.isMento()) throw new UnauthorizedException(": user type does not match");
+        if(!userService.isMentor()) throw new UnauthorizedException(": user type does not match");
 
         List<SimpleFeedbackDto> response = feedbackService.readCompletedFeedback(user.getName(), storage);
 

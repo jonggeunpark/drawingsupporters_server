@@ -19,7 +19,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/mentor")
 @RequiredArgsConstructor
-public class MentoController {
+public class MentorController {
 
 
     private final MentorService mentorService;
@@ -49,7 +49,7 @@ public class MentoController {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginRequestDto.getEmail(), loginRequestDto.getPassword());
 
-        if(!userService.isMento()) throw new NotFoundException(": user type does not match");
+        if(!userService.isMentor()) throw new NotFoundException(": user type does not match");
 
         HttpHeaders httpHeaders = new HttpHeaders();
 

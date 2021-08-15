@@ -113,8 +113,8 @@ public class DrawingController {
         // 학생일 경우
         if(userService.isMentee()) {
             response = drawingService.readDrawingByMentee(user.getName(), drawingId);
-        } else if (userService.isMento()) {
-            response = drawingService.readDrawingByMento(drawingId);
+        } else if (userService.isMentor()) {
+            response = drawingService.readDrawingByMentor(drawingId);
         } else {
             throw new UnauthorizedException(": user type does not match");
         }
@@ -137,7 +137,7 @@ public class DrawingController {
 
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
-        if(!userService.isMento()) throw new UnauthorizedException(": user type does not match");
+        if(!userService.isMentor()) throw new UnauthorizedException(": user type does not match");
 
         Long feedback_id = drawingService.updateDrawingStatus(user.getName(), drawingId);
 
@@ -157,7 +157,7 @@ public class DrawingController {
 
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
-        if(!userService.isMento()) throw new UnauthorizedException(": user type does not match");
+        if(!userService.isMentor()) throw new UnauthorizedException(": user type does not match");
 
         List<SimpleDrawingDto> response = drawingService.readRequestedDrawing(user.getName(), storage);
 
@@ -177,7 +177,7 @@ public class DrawingController {
     private ResponseEntity<Message> readAcceptedFeedback() {
 
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
-        if(!userService.isMento()) throw new UnauthorizedException(": user type does not match");
+        if(!userService.isMentor()) throw new UnauthorizedException(": user type does not match");
 
         List<SimpleDrawingDto> response = drawingService.readAcceptedDrawing(user.getName(), storage);
 

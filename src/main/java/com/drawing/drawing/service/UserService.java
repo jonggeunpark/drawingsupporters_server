@@ -28,7 +28,7 @@ public class UserService {
         return userRepository.getDtypeByEmail(authentication.getName()).equals("e");
     }
 
-    public Boolean isMento() {
+    public Boolean isMentor() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return userRepository.getDtypeByEmail(authentication.getName()).equals("o");
     }
@@ -55,7 +55,7 @@ public class UserService {
 
         if(isMentee()) {
             userType = "mentee";
-        } else if (isMento()) {
+        } else if (isMentor()) {
             userType = "mentor";
         }
         
