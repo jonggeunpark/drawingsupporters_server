@@ -27,7 +27,6 @@ import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
 
-@CrossOrigin
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/drawing")
@@ -48,7 +47,6 @@ public class DrawingController {
      * 권한 : 로그인, 학생
      * file과 json을 동시에 받음
      */
-    @CrossOrigin
     @PostMapping(consumes = {"multipart/form-data"})
     @ResponseBody
     public ResponseEntity<Message> createDrawing(
@@ -73,7 +71,6 @@ public class DrawingController {
      * ////권한 : 로그인, 학생
      * 권한 삭제 - 2021-08-15
      */
-    @CrossOrigin
     @GetMapping()
     public ResponseEntity<Message> readAllDrawing() {
 
@@ -100,7 +97,6 @@ public class DrawingController {
      * ////전문가일 경우 : 조건 없음
      * 권한 삭제 - 2021-08-15
      */
-    @CrossOrigin
     @GetMapping("/{drawingId}")
     private ResponseEntity<Message> readDrawing(@PathVariable("drawingId") Long drawingId) {
 
@@ -131,7 +127,6 @@ public class DrawingController {
      * URI : /api/drawing/{drawingId}/status
      * 권한 : 로그인, 전문가
      */
-    @CrossOrigin
     @PostMapping("/{drawingId}/status")
     private ResponseEntity<Message> updateDrawingStatus(@PathVariable("drawingId") Long drawingId) {
 
@@ -151,7 +146,6 @@ public class DrawingController {
      * URI : /api/drawing/requested
      * 권한 : 로그인, 전문가
      */
-    @CrossOrigin
     @GetMapping("/requested")
     private ResponseEntity<Message> readRequestedDrawing() {
 
@@ -171,7 +165,6 @@ public class DrawingController {
      * URI : /api/drawing/{drawingId}
      * 권한 : 로그인, 학생
      */
-    @CrossOrigin
     @DeleteMapping("/{drawingId}")
     private ResponseEntity<Message> deleteDrawing(@PathVariable("drawingId") Long drawingId) {
 

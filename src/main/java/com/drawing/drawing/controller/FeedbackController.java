@@ -27,7 +27,6 @@ import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/api/feedback")
 @RequiredArgsConstructor
@@ -102,7 +101,6 @@ public class FeedbackController {
      * URI : /api/feedback/accepted
      * 권한 : 로그인, 전문가
      */
-    @CrossOrigin
     @GetMapping("/accepted")
     private ResponseEntity<Message> readAcceptedFeedback() {
 
