@@ -121,17 +121,20 @@ public class DrawingService {
      */
 
     // 피드백 요청 상세 조회 - 권한 X
-    public DetailDrawingDto readDrawingDetail(Long drawingId) {
+    public DetailDrawingDto readDrawingDetail(Long drawingId, String storage) {
 
         Drawing drawing = findById(drawingId);
 
+        /*
         List<URL> urlList = new ArrayList<>();
         for (DrawingFile drawingFile : drawing.getDrawingFileSet()) {
             URL url = gcsService.generateV4GetObjectSignedUrl(drawingFile.getUuid() + drawingFile.getFilename());
             urlList.add(url);
         }
 
-        return DetailDrawingDto.of(drawing, urlList);
+         */
+
+        return DetailDrawingDto.of(drawing, storage);
     }
 
     // 피드백 요청 접수 ( FeedbackStatus requested -> accepted로 변경, Feedback 생성 )

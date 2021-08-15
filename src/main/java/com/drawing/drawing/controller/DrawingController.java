@@ -114,7 +114,7 @@ public class DrawingController {
             throw new UnauthorizedException(": user type does not match");
         }
          */
-        response = drawingService.readDrawingByMento(drawingId);
+        response = drawingService.readDrawingDetail(drawingId, storage);
 
         Message message = new Message(StatusCode.OK, ResponseMessage.READ_DRAWING, response);
         return new ResponseEntity<>(message, HttpStatus.OK);

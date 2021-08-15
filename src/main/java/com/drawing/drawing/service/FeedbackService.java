@@ -55,7 +55,7 @@ public class FeedbackService {
     }
 
     // 피드백 상세 조회
-    public DetailFeedbackDto readFeedback(Long id) {
+    public DetailFeedbackDto readFeedback(Long id, String storage) {
 
         Feedback feedback = feedbackRepository.findById(id).orElseThrow(() -> new NotFoundException("해당 id를 가진 피드백 없음"));
 
@@ -66,7 +66,7 @@ public class FeedbackService {
             urlList.add(downloadURL);
         }
 
-        return DetailFeedbackDto.of(feedback, urlList);
+        return DetailFeedbackDto.of(feedback, storage);
     }
 
     // 피드백 생성
