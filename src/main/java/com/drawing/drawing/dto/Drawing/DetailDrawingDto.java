@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +22,10 @@ public class DetailDrawingDto {
     private String feedback_file_type;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDate regist_date;
+    private LocalDate registration_date;
+
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDate deadline;
 
     private List<String> thumbnail_list;
     //private List<URL> download_url;
@@ -38,14 +40,14 @@ public class DetailDrawingDto {
 
         return new DetailDrawingDto(drawing.getTitle(), drawing.getDescription(), drawing.getPriceLowerLimit(),
                 drawing.getPriceUpperLimit(), Arrays.asList(drawing.getFeedbackType().split(",")),
-                drawing.getFeedbackType(), drawing.getRegistDate(), thumbnailList);
+                drawing.getFeedbackType(), drawing.getRegistrationDate(), drawing.getDeadline(), thumbnailList);
     }
 
     /*
     public static DetailDrawingDto of(Drawing drawing, List<URL> download_url) {
         return new DetailDrawingDto(drawing.getTitle(), drawing.getDescription(), drawing.getPriceLowerLimit(),
                 drawing.getPriceUpperLimit(), Arrays.asList(drawing.getFeedbackType().split(",")),
-                drawing.getFeedbackType(), drawing.getRegistDate(), download_url);
+                drawing.getFeedbackType(), drawing.getRegistrationDate(), download_url);
     }
      */
 }

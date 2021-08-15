@@ -36,15 +36,15 @@ public class Drawing {
     private DrawingStatus drawingStatus;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDate registDate;
+    private LocalDate registrationDate;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDate endDate;
+    private LocalDate deadline;
 
     //== 빌더 ==//
     @Builder
     public Drawing(Mentee mentee, Feedback feedback, String title, String description, String feedbackType, int priceUpperLimit,
-                   int priceLowerLimit, String phoneNumber, LocalDate registDate, LocalDate endDate,
+                   int priceLowerLimit, String phoneNumber, LocalDate registrationDate, LocalDate deadline,
                    Set<DrawingFile> drawingFileSet, DrawingStatus drawingStatus) {
 
         this.mentee = mentee;
@@ -58,8 +58,8 @@ public class Drawing {
         this.priceLowerLimit = priceLowerLimit;
         this.priceUpperLimit = priceUpperLimit;
         this.phoneNumber = phoneNumber;
-        this.registDate = registDate;
-        this.endDate = endDate;
+        this.registrationDate = registrationDate;
+        this.deadline = deadline;
         this.drawingFileSet = drawingFileSet;
     }
 

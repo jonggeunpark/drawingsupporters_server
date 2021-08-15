@@ -25,7 +25,7 @@ public class DetailFeedbackDto {
     private String feedback_file_type;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDate end_time;
+    private LocalDate completion_date;
 
     private List<String> thumbnail;
     //private List<URL> download_url_list;
