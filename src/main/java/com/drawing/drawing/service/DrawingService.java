@@ -10,6 +10,7 @@ import com.drawing.drawing.repository.DrawingRepository;
 import com.drawing.drawing.repository.FeedbackRepository;
 import com.google.cloud.storage.*;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -85,7 +86,7 @@ public class DrawingService {
      */
     public List<SimpleDrawingDto> readAllDrawing(String storage) {
 
-        List<Drawing> drawingList = drawingRepository.findAll();
+        List<Drawing> drawingList = drawingRepository.findAllByOrderById();
 
         List<SimpleDrawingDto> simpleDrawingDtoList = new ArrayList<>();
         for(Drawing drawing : drawingList) {
@@ -177,18 +178,19 @@ public class DrawingService {
     public List<SimpleDrawingDto> readRequestedDrawing(String email, String storage) {
 
         Mentor mentor = mentorService.findOneByEmail(email);
-        List<Drawing> drawingList = drawingRepository.findAll();
+
+        List<Drawing> drawingList = drawingRepository.findAllByStatusOrderById(DrawingStatus.REQUESTED);
 
         List<SimpleDrawingDto> simpleDrawingDtoList = new ArrayList<>();
 
         for(Drawing drawing : drawingList) {
-            if(drawing.getDrawingStatus() == DrawingStatus.REQUESTED)
             simpleDrawingDtoList.add(SimpleDrawingDto.of(drawing, storage));
         }
 
         return simpleDrawingDtoList;
     }
 
+    /*
     // 접수 상태 피드백 목록 조회
     public List<SimpleDrawingDto> readAcceptedDrawing(String email, String storage) {
         Mentor mentor = mentorService.findOneByEmail(email);
@@ -203,6 +205,7 @@ public class DrawingService {
 
         return drawingDtoList;
     }
+     */
 
     @Transactional
     public void deleteDrawing(String email, Long drawingId) {
