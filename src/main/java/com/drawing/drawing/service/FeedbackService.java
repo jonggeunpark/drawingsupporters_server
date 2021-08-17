@@ -1,6 +1,8 @@
 package com.drawing.drawing.service;
 
+import com.drawing.drawing.dto.Drawing.DetailDrawingDto;
 import com.drawing.drawing.dto.Feedback.DetailFeedbackDto;
+import com.drawing.drawing.dto.Feedback.FeedbackAndDrawingInfoDto;
 import com.drawing.drawing.dto.Feedback.FeedbackReqeustDto;
 import com.drawing.drawing.dto.Feedback.SimpleFeedbackDto;
 import com.drawing.drawing.entity.*;
@@ -54,18 +56,18 @@ public class FeedbackService {
     }
 
     // 피드백 상세 조회
-    public DetailFeedbackDto readFeedback(Long id, String storage) {
+    public FeedbackAndDrawingInfoDto readFeedbackAndDrawing(Long id, String storage) {
 
         Feedback feedback = feedbackRepository.findById(id).orElseThrow(() -> new NotFoundException("해당 id를 가진 피드백 없음"));
+        Drawing drawing = feedback.getDrawing();
 
         List<URL> urlList = new ArrayList<>();
         for(FeedbackFile feedbackFile: feedback.getFeedbackFileSet()) {
-
             URL downloadURL = gcsService.generateV4GetObjectSignedUrl(feedbackFile.getUuid() + feedbackFile.getFilename());
             urlList.add(downloadURL);
         }
 
-        return DetailFeedbackDto.of(feedback, storage);
+        return FeedbackAndDrawingInfoDto.of(DetailFeedbackDto.of(feedback, storage), DetailDrawingDto.of(drawing, storage));
     }
 
     // 피드백 생성

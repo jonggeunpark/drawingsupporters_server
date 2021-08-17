@@ -63,7 +63,7 @@ public class FeedbackController {
     @GetMapping("/{feedbackId}")
     private ResponseEntity<Message> readFeedback(@PathVariable("feedbackId") Long feedbackId) {
 
-        DetailFeedbackDto response = feedbackService.readFeedback(feedbackId, storage);
+        DetailFeedbackDto response = feedbackService.readFeedbackAndDrawing(feedbackId, storage);
 
         Message message = new Message(StatusCode.OK, ResponseMessage.READ_FEEDBACK, response);
         return new ResponseEntity<>(message, HttpStatus.OK);
