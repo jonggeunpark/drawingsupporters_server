@@ -14,6 +14,7 @@ import java.util.List;
 public class SimpleFeedbackDto {
 
     private Long id;
+    private String mentor_nickname;
     private String title;
     private List<String> thumbnail;
 
@@ -24,6 +25,6 @@ public class SimpleFeedbackDto {
             String thumbnail = storage + "/" + feedbackFile.getUuid() + feedbackFile.getFilename();
             thumbnailList.add(thumbnail);
         }
-        return new SimpleFeedbackDto(feedback.getId(), feedback.getTitle(), thumbnailList);
+        return new SimpleFeedbackDto(feedback.getId(), feedback.getMentor().getNickname(), feedback.getTitle(), thumbnailList);
     }
 }
