@@ -21,8 +21,8 @@ public class Drawing {
     @JoinColumn(name = "user_id")
     private Mentee mentee;
 
-    @OneToOne(mappedBy = "drawing")
-    private Feedback feedback;
+    @OneToMany(mappedBy = "drawing", cascade = CascadeType.ALL)
+    private Set<Feedback> feedbackSet = new HashSet<>();
 
     @OneToMany(mappedBy = "drawing", cascade = CascadeType.ALL)
     private Set<DrawingFile> drawingFileSet = new HashSet<>();
@@ -43,14 +43,14 @@ public class Drawing {
 
     //== 빌더 ==//
     @Builder
-    public Drawing(Mentee mentee, Feedback feedback, String title, String description, String feedbackType, int priceUpperLimit,
+    public Drawing(Mentee mentee, Set<Feedback> feedbackSet, String title, String description, String feedbackType, int priceUpperLimit,
                    int priceLowerLimit, String phoneNumber, LocalDate registrationDate, LocalDate deadline,
                    Set<DrawingFile> drawingFileSet, DrawingStatus drawingStatus) {
 
         this.mentee = mentee;
         mentee.getDrawingSet().add(this);
 
-        this.feedback = null;
+        this.feedbackSet = null;
         this.title = title;
         this.drawingStatus = drawingStatus;
         this.description = description;
@@ -65,9 +65,5 @@ public class Drawing {
 
     public void changeDrawingStatus(DrawingStatus drawingStatus){
         this.drawingStatus = drawingStatus;
-    }
-
-    public void setFeedback(Feedback feedback) {
-        this.feedback = feedback;
     }
 }

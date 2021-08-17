@@ -18,7 +18,7 @@ public class Feedback {
     @Column(name = "feedback_id")
     private Long id;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "drawing_id")
     private Drawing drawing;
 
@@ -45,7 +45,7 @@ public class Feedback {
     @Builder
     public Feedback (Drawing drawing, Mentor mentor, LocalDate acceptDate, Set<FeedbackFile> feedbackFileSet) {
         this.drawing = drawing;
-        drawing.setFeedback(this);
+        drawing.getFeedbackSet().add(this);
         this.mentor = mentor;
         mentor.getFeedbackSet().add(this);
         this.acceptDate = acceptDate;
