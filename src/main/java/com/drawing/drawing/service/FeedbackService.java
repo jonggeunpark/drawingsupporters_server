@@ -47,9 +47,7 @@ public class FeedbackService {
         List<SimpleFeedbackDto> feedbackDtoList = new ArrayList<>();
 
         for(Feedback feedback: feedbackList) {
-            if (feedback.getStatus() == FeedbackStatus.COMPLETED) {
-                feedbackDtoList.add(SimpleFeedbackDto.of(feedback, storage));
-            }
+            feedbackDtoList.add(SimpleFeedbackDto.of(feedback, storage));
         }
 
         return feedbackDtoList;
@@ -93,35 +91,6 @@ public class FeedbackService {
                 .uuid(uuid.toString())
                 .build();
 
-        feedback.completeFeedback(feedbackReqeustDto.getTitle(), feedbackReqeustDto.getDescription(),
-                feedbackReqeustDto.getPrice(), feedbackReqeustDto.getFeedback_file_type(), LocalDate.now());
-
         return saveFeedback(feedback);
-    }
-
-    // 접수 상태 피드백 목록 조회
-    public List<SimpleFeedbackDto> readAcceptedFeedback(String email, String storage) {
-        Mentor mentor = mentorService.findOneByEmail(email);
-        List<Feedback> feedbackList = feedbackRepository.findAllByMentorAndStatusOrderById(mentor, FeedbackStatus.ACCEPTED);
-        List<SimpleFeedbackDto> feedbackDtoList = new ArrayList<>();
-
-        for(Feedback feedback: feedbackList) {
-            feedbackDtoList.add(SimpleFeedbackDto.of(feedback, storage));
-        }
-
-        return feedbackDtoList;
-    }
-
-    // 완료 상태 피드백 목록 조회
-    public List<SimpleFeedbackDto> readCompletedFeedback(String email, String storage) {
-        Mentor mentor = mentorService.findOneByEmail(email);
-        List<Feedback> feedbackList = feedbackRepository.findAllByMentorAndStatusOrderById(mentor, FeedbackStatus.COMPLETED);
-        List<SimpleFeedbackDto> feedbackDtoList = new ArrayList<>();
-
-        for(Feedback feedback: feedbackList) {
-                feedbackDtoList.add(SimpleFeedbackDto.of(feedback, storage));
-        }
-
-        return feedbackDtoList;
     }
 }

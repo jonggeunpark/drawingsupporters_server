@@ -149,31 +149,6 @@ public class DrawingService {
         return DetailDrawingDto.of(drawing, storage);
     }
 
-    // 피드백 요청 접수 ( FeedbackStatus requested -> accepted로 변경, Feedback 생성 )
-    @Transactional
-    public Long updateDrawingStatus(String email, Long drawingId) {
-
-        Mentor mentor = mentorService.findOneByEmail(email);
-        Drawing drawing = findById(drawingId);
-
-        // 이미 접수되었을 경우
-        if(drawing.getFeedback() != null) {
-            throw new UnauthorizedException("이미 접수된 피드백 요청입니다.");
-        }
-
-        drawing.changeDrawingStatus(DrawingStatus.ACCEPTED);
-
-        Feedback feedback = Feedback.builder()
-                .drawing(drawing)
-                .mentor(mentor)
-
-                .acceptDate(LocalDate.now())
-                .build();
-
-        saveDrawing(drawing);
-        return feedbackRepository.save(feedback).getId();
-    }
-
     // 요청 상태 피드백 요청 목록 조회
     public List<SimpleDrawingDto> readRequestedDrawing(String email, String storage) {
 
@@ -190,22 +165,6 @@ public class DrawingService {
         return simpleDrawingDtoList;
     }
 
-    /*
-    // 접수 상태 피드백 목록 조회
-    public List<SimpleDrawingDto> readAcceptedDrawing(String email, String storage) {
-        Mentor mentor = mentorService.findOneByEmail(email);
-        List<SimpleDrawingDto> drawingDtoList = new ArrayList<>();
-
-        for(Feedback feedback: mentor.getFeedbackSet()) {
-            if(feedback.getStatus() == FeedbackStatus.ACCEPTED){
-
-                drawingDtoList.add(SimpleDrawingDto.of(feedback.getDrawing(), storage));
-            }
-        }
-
-        return drawingDtoList;
-    }
-     */
 
     @Transactional
     public void deleteDrawing(String email, Long drawingId) {

@@ -25,10 +25,9 @@ public class DetailFeedbackDto {
     private String feedback_file_type;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDate completion_date;
+    private LocalDate registration_date;
 
     private List<String> thumbnail;
-    //private List<URL> download_url_list;
 
     public static DetailFeedbackDto of(Feedback feedback, String storage) {
         Drawing drawing = feedback.getDrawing();
@@ -41,7 +40,7 @@ public class DetailFeedbackDto {
 
         return new DetailFeedbackDto(feedback.getTitle(), feedback.getDescription(), drawing.getPriceLowerLimit(),
                 drawing.getPriceUpperLimit(), Arrays.asList(drawing.getFeedbackType().split(",")),
-                feedback.getDrawing().getFeedbackType(), feedback.getCompleteDate(), thumbnailList);
+                feedback.getDrawing().getFeedbackType(), feedback.getRegistrationDate(), thumbnailList);
     }
     /*
     public static DetailFeedbackDto of(Feedback feedback, List<URL> downloadlinkList) {

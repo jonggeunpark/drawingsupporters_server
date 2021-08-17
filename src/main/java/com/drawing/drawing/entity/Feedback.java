@@ -30,38 +30,25 @@ public class Feedback {
     private String description;
     private int price;
     private String feedbackFileType;
-    private FeedbackStatus status;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDate acceptDate;
-
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDate completeDate;
+    private LocalDate registrationDate;
 
     @OneToMany(mappedBy = "feedback", cascade = CascadeType.ALL)
     private Set<FeedbackFile> feedbackFileSet = new HashSet<>();
 
     //== 빌더 ==//
     @Builder
-    public Feedback (Drawing drawing, Mentor mentor, LocalDate acceptDate, Set<FeedbackFile> feedbackFileSet) {
+    public Feedback (Drawing drawing, Mentor mentor, String title, String description, int price, LocalDate registrationDate, Set<FeedbackFile> feedbackFileSet) {
         this.drawing = drawing;
         drawing.getFeedbackSet().add(this);
         this.mentor = mentor;
         mentor.getFeedbackSet().add(this);
-        this.acceptDate = acceptDate;
-        this.status = FeedbackStatus.ACCEPTED;
-        this.feedbackFileSet = feedbackFileSet;
-    }
 
-    public void completeFeedback(String title, String description, int price,
-                                 String feedbackFileType, LocalDate completeDate) {
         this.title = title;
         this.description = description;
         this.price = price;
-        this.feedbackFileType = feedbackFileType;
-        this.completeDate = completeDate;
-        this.status = FeedbackStatus.COMPLETED;
-        this.drawing.changeDrawingStatus(DrawingStatus.COMPLETED);
+        this.registrationDate = registrationDate;
+        this.feedbackFileSet = feedbackFileSet;
     }
-
 }

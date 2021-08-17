@@ -93,41 +93,4 @@ public class FeedbackController {
         Message message = new Message(StatusCode.OK, ResponseMessage.CREATE_FEEDBACK, id);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
-
-
-    /**
-     * 접수 상태 피드백 목록 조회
-     * METHOD : GET
-     * URI : /api/feedback/accepted
-     * 권한 : 로그인, 전문가
-     */
-    @GetMapping("/accepted")
-    private ResponseEntity<Message> readAcceptedFeedback() {
-
-        Authentication user = SecurityContextHolder.getContext().getAuthentication();
-        if(!userService.isMentor()) throw new UnauthorizedException(": user type does not match");
-
-        List<SimpleFeedbackDto> response = feedbackService.readAcceptedFeedback(user.getName(), storage);
-
-        Message message = new Message(StatusCode.OK, ResponseMessage.READ_ACCEPTED_FEEDBACK, response);
-        return new ResponseEntity<>(message, HttpStatus.OK);
-    }
-
-    /**
-     * 완료 상태 피드백 목록 조회
-     * METHOD : GET
-     * URI : /api/feedback/completed
-     * 권한 : 로그인, 전문가
-     */
-    @GetMapping("/completed")
-    private ResponseEntity<Message> readCompletedFeedback() {
-
-        Authentication user = SecurityContextHolder.getContext().getAuthentication();
-        if(!userService.isMentor()) throw new UnauthorizedException(": user type does not match");
-
-        List<SimpleFeedbackDto> response = feedbackService.readCompletedFeedback(user.getName(), storage);
-
-        Message message = new Message(StatusCode.OK, ResponseMessage.READ_COMPLETED_FEEDBACK, response);
-        return new ResponseEntity<>(message, HttpStatus.OK);
-    }
 }

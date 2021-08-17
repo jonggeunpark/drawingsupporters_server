@@ -123,25 +123,6 @@ public class DrawingController {
     }
 
     /**
-     * 피드백 요청 접수 ( FeedbackStatus requested -> accepted로 변경, Feedback 생성 )
-     * METHOD : POST
-     * URI : /api/drawing/{drawingId}/status
-     * 권한 : 로그인, 전문가
-     */
-    @PostMapping("/{drawingId}/status")
-    private ResponseEntity<Message> updateDrawingStatus(@PathVariable("drawingId") Long drawingId) {
-
-        Authentication user = SecurityContextHolder.getContext().getAuthentication();
-
-        if(!userService.isMentor()) throw new UnauthorizedException(": user type does not match");
-
-        Long feedback_id = drawingService.updateDrawingStatus(user.getName(), drawingId);
-
-        Message message = new Message(StatusCode.OK, ResponseMessage.UPDATE_DRAWING_STATUS_ACCEPTED, feedback_id);
-        return new ResponseEntity<>(message, HttpStatus.OK);
-    }
-
-    /**
      * 요청 상태 피드백 요청 목록 조회
      * METHOD : GET
      * URI : /api/drawing/requested
