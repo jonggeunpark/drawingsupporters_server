@@ -4,6 +4,7 @@ import com.drawing.drawing.constants.Message;
 import com.drawing.drawing.constants.ResponseMessage;
 import com.drawing.drawing.constants.StatusCode;
 import com.drawing.drawing.dto.Drawing.DetailDrawingDto;
+import com.drawing.drawing.dto.Drawing.DrawingAndFeedbackListInfo;
 import com.drawing.drawing.dto.Drawing.DrawingRequestDto;
 import com.drawing.drawing.dto.Drawing.SimpleDrawingDto;
 import com.drawing.drawing.dto.Feedback.SimpleFeedbackDto;
@@ -104,7 +105,7 @@ public class DrawingController {
 
         //Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
-        DetailDrawingDto response = null;
+        DrawingAndFeedbackListInfo response = null;
 
         /*
         // 학생일 경우
@@ -116,7 +117,7 @@ public class DrawingController {
             throw new UnauthorizedException(": user type does not match");
         }
          */
-        response = drawingService.readDrawingDetail(drawingId, storage);
+        response = drawingService.readDrawingAndFeedbackList(drawingId, storage);
 
         Message message = new Message(StatusCode.OK, ResponseMessage.READ_DRAWING, response);
         return new ResponseEntity<>(message, HttpStatus.OK);

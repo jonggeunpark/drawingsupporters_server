@@ -1,8 +1,10 @@
 package com.drawing.drawing.service;
 
 import com.drawing.drawing.dto.Drawing.DetailDrawingDto;
+import com.drawing.drawing.dto.Drawing.DrawingAndFeedbackListInfo;
 import com.drawing.drawing.dto.Drawing.DrawingRequestDto;
 import com.drawing.drawing.dto.Drawing.SimpleDrawingDto;
+import com.drawing.drawing.dto.Feedback.DetailFeedbackDto;
 import com.drawing.drawing.entity.*;
 import com.drawing.drawing.exception.NotFoundException;
 import com.drawing.drawing.exception.UnauthorizedException;
@@ -19,6 +21,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -133,7 +136,7 @@ public class DrawingService {
      */
 
     // 피드백 요청 상세 조회 - 권한 X
-    public DetailDrawingDto readDrawingDetail(Long drawingId, String storage) {
+    public DrawingAndFeedbackListInfo readDrawingAndFeedbackList(Long drawingId, String storage) {
 
         Drawing drawing = findById(drawingId);
 
@@ -146,7 +149,14 @@ public class DrawingService {
 
          */
 
-        return DetailDrawingDto.of(drawing, storage);
+        Set<Feedback> feedbackList = drawing.getFeedbackSet();
+        List<DetailFeedbackDto> feedbackDtoList = new ArrayList<>();
+
+        for(Feedback feedback: feedbackList) {
+            DetailFeedbackDto detailFeedbackDto = DetailFeedbackDto.of(feedback,storage);
+            feedbackDtoList.add(detailFeedbackDto);
+        }
+        return DrawingAndFeedbackListInfo.of(DetailDrawingDto.of(drawing, storage), feedbackDtoList);
     }
 
     // 요청 상태 피드백 요청 목록 조회

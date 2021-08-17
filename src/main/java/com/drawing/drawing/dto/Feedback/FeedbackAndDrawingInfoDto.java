@@ -8,8 +8,8 @@ import lombok.Getter;
 @Getter
 public class FeedbackAndDrawingInfoDto {
 
-    private DetailFeedbackDto feedbackInfo;
-    private DetailDrawingDto drawingInfo;
+    private DetailFeedbackDto feedback_info;
+    private DetailDrawingDto drawing_info;
 
     public static FeedbackAndDrawingInfoDto of(DetailFeedbackDto detailFeedbackDto, DetailDrawingDto detailDrawingDto) {
         return new FeedbackAndDrawingInfoDto(detailFeedbackDto, detailDrawingDto);
