@@ -19,8 +19,7 @@ public class DetailFeedbackDto {
 
     private String title;
     private String description;
-    private int price_lower_limit;
-    private int price_upper_limit;
+    private int price;
     private List<String> feedback_type;
     private String feedback_file_type;
 
@@ -38,8 +37,7 @@ public class DetailFeedbackDto {
             thumbnailList.add(thumbnail);
         }
 
-        return new DetailFeedbackDto(feedback.getTitle(), feedback.getDescription(), drawing.getPriceLowerLimit(),
-                drawing.getPriceUpperLimit(), Arrays.asList(drawing.getFeedbackType().split(",")),
+        return new DetailFeedbackDto(feedback.getTitle(), feedback.getDescription(), feedback.getPrice(), Arrays.asList(drawing.getFeedbackType().split(",")),
                 feedback.getDrawing().getFeedbackType(), feedback.getRegistrationDate(), thumbnailList);
     }
     /*

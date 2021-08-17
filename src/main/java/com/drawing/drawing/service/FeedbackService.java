@@ -77,6 +77,7 @@ public class FeedbackService {
         Mentor mentor = mentorService.findOneByEmail(email);
         Drawing drawing = drawingService.findById(drawingId);
 
+
         Feedback feedback = Feedback.builder()
                 .drawing(drawing)
                 .mentor(mentor)
@@ -84,9 +85,7 @@ public class FeedbackService {
                 .title(feedbackReqeustDto.getTitle())
                 .description(feedbackReqeustDto.getDescription())
                 .registrationDate(LocalDate.now())
-                .feedbackFileSet(null)
                 .build();
-
 
         // 파일명 앞에 랜덤 값 부여
         UUID uuid = UUID.randomUUID();

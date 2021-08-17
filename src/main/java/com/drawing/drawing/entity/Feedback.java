@@ -49,6 +49,6 @@ public class Feedback {
         this.description = description;
         this.price = price;
         this.registrationDate = registrationDate;
-        this.feedbackFileSet = feedbackFileSet;
+        this.feedbackFileSet = new HashSet<>();
     }
 }

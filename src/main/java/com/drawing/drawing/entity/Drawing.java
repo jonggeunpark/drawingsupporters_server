@@ -50,7 +50,7 @@ public class Drawing {
         this.mentee = mentee;
         mentee.getDrawingSet().add(this);
 
-        this.feedbackSet = null;
+        this.feedbackSet = new HashSet<>();
         this.title = title;
         this.drawingStatus = drawingStatus;
         this.description = description;

@@ -5,6 +5,7 @@ import com.drawing.drawing.constants.ResponseMessage;
 import com.drawing.drawing.constants.StatusCode;
 import com.drawing.drawing.dto.Drawing.DrawingRequestDto;
 import com.drawing.drawing.dto.Feedback.DetailFeedbackDto;
+import com.drawing.drawing.dto.Feedback.FeedbackAndDrawingInfoDto;
 import com.drawing.drawing.dto.Feedback.FeedbackReqeustDto;
 import com.drawing.drawing.dto.Feedback.SimpleFeedbackDto;
 import com.drawing.drawing.entity.Feedback;
@@ -63,7 +64,7 @@ public class FeedbackController {
     @GetMapping("/{feedbackId}")
     private ResponseEntity<Message> readFeedback(@PathVariable("feedbackId") Long feedbackId) {
 
-        DetailFeedbackDto response = feedbackService.readFeedbackAndDrawing(feedbackId, storage);
+        FeedbackAndDrawingInfoDto response = feedbackService.readFeedbackAndDrawing(feedbackId, storage);
 
         Message message = new Message(StatusCode.OK, ResponseMessage.READ_FEEDBACK, response);
         return new ResponseEntity<>(message, HttpStatus.OK);
@@ -76,7 +77,7 @@ public class FeedbackController {
      * 권한 : 로그인, 전문가
      */
     @PostMapping(value = "/{drawingId}", consumes = {"multipart/form-data"})
-    private ResponseEntity<Message> createFeedback(@PathVariable("feedbackId") Long drawingId,
+    private ResponseEntity<Message> createFeedback(@PathVariable("drawingId") Long drawingId,
                                                    @RequestPart("properties") FeedbackReqeustDto feedbackReqeustDto,
                                                    @RequestPart("file") MultipartFile file ) throws Exception {
 

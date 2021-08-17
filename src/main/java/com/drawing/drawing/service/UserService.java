@@ -30,6 +30,7 @@ public class UserService {
 
     public Boolean isMentor() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         return userRepository.getDtypeByEmail(authentication.getName()).equals("o");
     }
 

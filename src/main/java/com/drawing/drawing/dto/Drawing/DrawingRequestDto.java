@@ -37,6 +37,7 @@ public class DrawingRequestDto {
                 .registrationDate(LocalDate.now())
                 .drawingStatus(DrawingStatus.REQUESTED)
                 .drawingFileSet(new HashSet<>())
+                .feedbackSet(new HashSet<>())
                 .build();
     }
 }
