@@ -72,11 +72,11 @@ public class FeedbackController {
     /**
      * 피드백 생성
      * METHOD : POST
-     * URI : /api/feedback/{feedbackId}
+     * URI : /api/feedback/{drawingId}
      * 권한 : 로그인, 전문가
      */
-    @PostMapping(value = "/{feedbackId}", consumes = {"multipart/form-data"})
-    private ResponseEntity<Message> createFeedback(@PathVariable("feedbackId") Long feedbackId,
+    @PostMapping(value = "/{drawingId}", consumes = {"multipart/form-data"})
+    private ResponseEntity<Message> createFeedback(@PathVariable("feedbackId") Long drawingId,
                                                    @RequestPart("properties") FeedbackReqeustDto feedbackReqeustDto,
                                                    @RequestPart("file") MultipartFile file ) throws Exception {
 
@@ -84,13 +84,13 @@ public class FeedbackController {
         if(!userService.isMentor()) throw new UnauthorizedException(": user type does not match");
 
         // 피드백 생성
-        Long id = feedbackService.createFeedback(file, user.getName(), feedbackId, feedbackReqeustDto);
+        Long feedbackId = feedbackService.createFeedback(file, user.getName(), drawingId, feedbackReqeustDto);
 
         // 메일 전송
         Feedback feedback = feedbackService.findById(feedbackId);
         mailService.sendMail(feedback);
 
-        Message message = new Message(StatusCode.OK, ResponseMessage.CREATE_FEEDBACK, id);
+        Message message = new Message(StatusCode.OK, ResponseMessage.CREATE_FEEDBACK, feedbackId);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }

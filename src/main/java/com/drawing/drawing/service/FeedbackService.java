@@ -70,14 +70,21 @@ public class FeedbackService {
 
     // 피드백 생성
     @Transactional
-    public Long createFeedback(MultipartFile file, String email, Long feedbackId, FeedbackReqeustDto feedbackReqeustDto) throws IOException {
+    public Long createFeedback(MultipartFile file, String email, Long drawingId, FeedbackReqeustDto feedbackReqeustDto) throws IOException {
 
         Mentor mentor = mentorService.findOneByEmail(email);
-        Feedback feedback = findById(feedbackId);
+        Drawing drawing = drawingService.findById(drawingId);
 
-        if(feedback.getMentor() != mentor) {
-            throw new NotFoundException("id가 유효하지 않음");
-        }
+        Feedback feedback = Feedback.builder()
+                .drawing(drawing)
+                .mentor(mentor)
+                .price(feedbackReqeustDto.getPrice())
+                .title(feedbackReqeustDto.getTitle())
+                .description(feedbackReqeustDto.getDescription())
+                .registrationDate(LocalDate.now())
+                .feedbackFileSet(null)
+                .build();
+
 
         // 파일명 앞에 랜덤 값 부여
         UUID uuid = UUID.randomUUID();
