@@ -7,18 +7,15 @@ import com.drawing.drawing.dto.Drawing.SimpleDrawingDto;
 import com.drawing.drawing.dto.Feedback.DetailFeedbackDto;
 import com.drawing.drawing.entity.*;
 import com.drawing.drawing.exception.NotFoundException;
-import com.drawing.drawing.exception.UnauthorizedException;
 import com.drawing.drawing.repository.DrawingRepository;
 import com.drawing.drawing.repository.FeedbackRepository;
 import com.google.cloud.storage.*;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -89,7 +86,7 @@ public class DrawingService {
      */
     public List<SimpleDrawingDto> readAllDrawing(String storage) {
 
-        List<Drawing> drawingList = drawingRepository.findAllByOrderById();
+        List<Drawing> drawingList = drawingRepository.findAllByOrderByIdDesc();
 
         List<SimpleDrawingDto> simpleDrawingDtoList = new ArrayList<>();
         for(Drawing drawing : drawingList) {
@@ -164,7 +161,7 @@ public class DrawingService {
 
         Mentor mentor = mentorService.findOneByEmail(email);
 
-        List<Drawing> drawingList = drawingRepository.findAllByDrawingStatusOrderById(DrawingStatus.REQUESTED);
+        List<Drawing> drawingList = drawingRepository.findAllByDrawingStatusOrderByIdDesc(DrawingStatus.REQUESTED);
 
         List<SimpleDrawingDto> simpleDrawingDtoList = new ArrayList<>();
 

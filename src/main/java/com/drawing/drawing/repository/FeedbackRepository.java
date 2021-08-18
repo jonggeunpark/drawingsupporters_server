@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
 
-    List<Feedback> findAllByOrderById();
+    List<Feedback> findAllByOrderByIdDesc();
 }

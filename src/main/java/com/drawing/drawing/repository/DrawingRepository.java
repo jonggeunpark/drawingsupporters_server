@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface DrawingRepository extends JpaRepository<Drawing, Long> {
 
-    List<Drawing> findAllByOrderById();
+    List<Drawing> findAllByOrderByIdDesc();
 
-    List<Drawing> findAllByDrawingStatusOrderById(DrawingStatus status);
+    List<Drawing> findAllByDrawingStatusOrderByIdDesc(DrawingStatus status);
 }

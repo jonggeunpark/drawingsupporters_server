@@ -44,7 +44,7 @@ public class FeedbackService {
     // 피드백 전체 조회
     public List<SimpleFeedbackDto> readAllFeedback(String storage) {
 
-        List<Feedback> feedbackList = feedbackRepository.findAllByOrderById();
+        List<Feedback> feedbackList = feedbackRepository.findAllByOrderByIdDesc();
 
         List<SimpleFeedbackDto> feedbackDtoList = new ArrayList<>();
 
