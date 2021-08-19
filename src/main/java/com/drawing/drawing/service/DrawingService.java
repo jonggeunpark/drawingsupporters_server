@@ -137,16 +137,7 @@ public class DrawingService {
 
         Drawing drawing = findById(drawingId);
 
-        /*
-        List<URL> urlList = new ArrayList<>();
-        for (DrawingFile drawingFile : drawing.getDrawingFileSet()) {
-            URL url = gcsService.generateV4GetObjectSignedUrl(drawingFile.getUuid() + drawingFile.getFilename());
-            urlList.add(url);
-        }
-
-         */
-
-        Set<Feedback> feedbackList = drawing.getFeedbackSet();
+        List<Feedback> feedbackList = feedbackRepository.findAllByDrawingIdOrderById(drawingId);
         List<DetailFeedbackDto> feedbackDtoList = new ArrayList<>();
 
         for(Feedback feedback: feedbackList) {
