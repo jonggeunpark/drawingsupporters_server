@@ -16,6 +16,7 @@ import java.util.List;
 public class DetailDrawingDto {
     private String title;
     private String description;
+    private String nickname;
     private int price_lower_limit;
     private int price_upper_limit;
     private List<String> feedback_type;
@@ -38,7 +39,7 @@ public class DetailDrawingDto {
             thumbnailList.add(thumbnail);
         }
 
-        return new DetailDrawingDto(drawing.getTitle(), drawing.getDescription(), drawing.getPriceLowerLimit(),
+        return new DetailDrawingDto(drawing.getTitle(), drawing.getDescription(), drawing.getMentee().getNickname(), drawing.getPriceLowerLimit(),
                 drawing.getPriceUpperLimit(), Arrays.asList(drawing.getFeedbackType().split(",")),
                 drawing.getFeedbackType(), drawing.getRegistrationDate(), drawing.getDeadline(), thumbnailList);
     }

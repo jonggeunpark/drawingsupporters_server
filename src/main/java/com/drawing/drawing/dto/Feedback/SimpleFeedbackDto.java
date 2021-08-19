@@ -14,7 +14,7 @@ import java.util.List;
 public class SimpleFeedbackDto {
 
     private Long id;
-    private String mentor_nickname;
+    private String nickname;
     private String title;
     private List<String> thumbnail;
 

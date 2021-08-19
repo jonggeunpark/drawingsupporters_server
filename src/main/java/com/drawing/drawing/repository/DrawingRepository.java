@@ -11,4 +11,5 @@ public interface DrawingRepository extends JpaRepository<Drawing, Long> {
     List<Drawing> findAllByOrderByIdDesc();
 
     List<Drawing> findAllByDrawingStatusOrderByIdDesc(DrawingStatus status);
+
 }

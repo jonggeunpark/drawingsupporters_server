@@ -19,6 +19,7 @@ public class DetailFeedbackDto {
 
     private String title;
     private String description;
+    private String nickname;
     private int price;
     private List<String> feedback_type;
     private String feedback_file_type;
@@ -37,16 +38,8 @@ public class DetailFeedbackDto {
             thumbnailList.add(thumbnail);
         }
 
-        return new DetailFeedbackDto(feedback.getTitle(), feedback.getDescription(), feedback.getPrice(), Arrays.asList(drawing.getFeedbackType().split(",")),
+        return new DetailFeedbackDto(feedback.getTitle(), feedback.getDescription(), feedback.getMentor().getNickname(),
+                feedback.getPrice(), Arrays.asList(drawing.getFeedbackType().split(",")),
                 feedback.getDrawing().getFeedbackType(), feedback.getRegistrationDate(), thumbnailList);
     }
-    /*
-    public static DetailFeedbackDto of(Feedback feedback, List<URL> downloadlinkList) {
-        Drawing drawing = feedback.getDrawing();
-        return new DetailFeedbackDto(feedback.getTitle(), feedback.getDescription(), drawing.getPriceLowerLimit(),
-                drawing.getPriceUpperLimit(), Arrays.asList(drawing.getFeedbackType().split(",")),
-                feedback.getDrawing().getFeedbackType(), feedback.getCompleteDate(), downloadlinkList);
-    }
-     */
-
 }
